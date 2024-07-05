@@ -1,1 +1,6 @@
-export const schemaTypes = []
+import heroImages from "./heroImages";
+
+export const schemaTypes = [
+  heroImages,
+
+]
