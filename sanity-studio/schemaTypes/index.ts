@@ -1,6 +1,3 @@
-import heroImages from "./heroImages";
+import heroImages from './heroImages'
 
-export const schemaTypes = [
-  heroImages,
-
-]
+export const schemaTypes = [heroImages]
