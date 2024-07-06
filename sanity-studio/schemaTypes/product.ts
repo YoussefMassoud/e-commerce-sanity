@@ -9,6 +9,11 @@ export default {
       title: 'Name of Product',
     },
     {
+      name: 'price',
+      type: 'string',
+      title: 'Price of Product',
+    },
+    {
       name: 'images',
       type: 'array',
       title: 'Product Images',
@@ -27,6 +32,5 @@ export default {
         source: 'name',
       },
     },
-    
   ],
 }
