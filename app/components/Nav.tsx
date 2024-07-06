@@ -31,13 +31,16 @@ export default function Nav() {
             <img src="/instagram.svg" alt="insta" className="w-4" />
             <img className="w-4" src="/phone.svg" alt="insta" />
           </div>
-          <img
-            src="/Logo.svg"
-            width={"53px"}
-            height={"53px"}
-            className="lg:!w-[53px] w-[36px]"
-            alt="Logo"
-          />
+
+          <Link href="/">
+            <img
+              src="/Logo.svg"
+              width={"100px"}
+              height={"100px"}
+              className="lg:!w-[100px] w-[100px]"
+              alt="Logo"
+            />
+          </Link>
           <div className="flex w-full justify-end gap-5 items-center">
             <div className="flex items-center gap-1">
               <img className="w-[20px] h-[20px]" src="/cart.svg" alt="cart" />
