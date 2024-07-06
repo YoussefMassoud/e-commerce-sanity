@@ -24,8 +24,8 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col lg:px-[40px] px-[24px]">
-      <div className="border-b-2 border-gray-200">
+    <div className="flex flex-col z-50 lg:px-[40px] px-[24px] relative">
+      <div className="border-b-2 border-gray-200 z-50">
         <div className="flex w-full justify-between text-xl py-2">
           <div className="flex gap-3 w-full">
             <img src="/instagram.svg" alt="insta" className="w-4" />
@@ -49,14 +49,14 @@ export default function Nav() {
           </div>
         </div>
       </div>
-      <div className="flex flex-row gap-4 py-4 justify-center items-center ">
+      <div className="flex flex-row gap-4 py-4 justify-center items-center z-50">
         {links.map((link) => (
           <Link
             href={link.href}
             key={link.href}
             className={cn(
               link.href === pathname
-                ? "text-foreground  "
+                ? "text-foreground"
                 : " text-muted-foreground hover:text-foreground"
             )}
           >
