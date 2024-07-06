@@ -74,3 +74,38 @@
     @apply bg-background text-foreground;
   }
 }
+/* app/globals.css or app/styles/globals.css */
+
+/* For Firefox */
+/* app/globals.css or app/styles/globals.css */
+
+/* For Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(228, 231, 236, 0.5) transparent;
+}
+
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 0px; /* Set the width of the scrollbar */
+  height: 2px; /* Set the height of the scrollbar for horizontal scroll */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Hide the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(
+    228,
+    231,
+    236,
+    0.5
+  ); /* Set the color of the scrollbar thumb to be more transparent */
+  border-radius: 8px; /* Set the roundness of the scrollbar thumb */
+}
+
+::selection {
+  background: var(--text, #000);
+  color: #fff;
+}
