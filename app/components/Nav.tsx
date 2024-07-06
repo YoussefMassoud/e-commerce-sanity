@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { cn } from "@/lib/utils";
@@ -23,13 +24,32 @@ export default function Nav() {
   const pathname = usePathname();
 
   return (
-    <>
-      <div className="flex justify-center  mx-14  lg:max-24 border-b border-gray-400 items-center ">
-        <div className="flex text-center  text-xl py-4">
-          <img src="/Logo.svg" width={"60px"} height={"60px"} />
+    <div className="flex flex-col lg:px-[40px] px-[24px]">
+      <div className="border-b-2 border-gray-200">
+        <div className="flex w-full justify-between text-xl py-2">
+          <div className="flex gap-3 w-full">
+            <img src="/instagram.svg" alt="insta" className="w-4" />
+            <img className="w-4" src="/phone.svg" alt="insta" />
+          </div>
+          <img
+            src="/Logo.svg"
+            width={"53px"}
+            height={"53px"}
+            className="lg:!w-[53px] w-[36px]"
+            alt="Logo"
+          />
+          <div className="flex w-full justify-end gap-5 items-center">
+            <div className="flex items-center gap-1">
+              <img className="w-[20px] h-[20px]" src="/cart.svg" alt="cart" />
+              {/** Cart items number */}
+              <h1 className="text-gray-400 text-[14px] font-normal">{"0"}</h1>
+            </div>
+            <img className="w-[20px]" src="/search.svg" alt="search" />
+            <h1 className="text-[15px] font-semibold">عربي</h1>
+          </div>
         </div>
       </div>
-      <div className="flex flex-row gap-4 py-4 border-b border-gray-400 justify-center items-center ">
+      <div className="flex flex-row gap-4 py-4 justify-center items-center ">
         {links.map((link) => (
           <Link
             href={link.href}
@@ -44,6 +64,6 @@ export default function Nav() {
           </Link>
         ))}
       </div>
-    </>
+    </div>
   );
 }
