@@ -4,7 +4,7 @@ import ImageGallery from "@/app/components/Product(components)/ImageGallery";
 import { fullProduct } from "@/app/interface";
 import { Button } from "@/components/ui/button";
 import { client } from "@/lib/sanity";
-import { Star, Truck } from "lucide-react";
+import { Truck } from "lucide-react";
 
 async function getData(slug: string) {
   const query = `*[_type == "product" && slug.current == "${slug}"][0] {
@@ -14,8 +14,6 @@ async function getData(slug: string) {
           name,
           description,
           "slug": slug.current,
-          "categoryName": category->name,
-          price_id
       }`;
   const data = await client.fetch(query);
   return data;
@@ -43,14 +41,12 @@ export default async function ProductPage({
               </div>
 
               {/* price section */}
-              {/* <div className="flex items-end gap-2">
-                  <span className="text-xl font-bold text-1 md:text-2xl">
-                    ${data.price}
-                  </span>
-                  <span className="mb-0.5 text-red-500 line-through">
-                    ${data.price + 30}
-                  </span>
-                </div>  */}
+              <div className="flex items-end gap-2">
+                <span className="text-xl font-bold text-1 md:text-2xl">
+                  ${data.price}
+                </span>
+               
+              </div>                  
 
               <div className="mt-4 mb-6 flex items-center gap-2 text-blue-500">
                 <Truck className="w-6 h-6" />
