@@ -10,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { FilterState } from "../shop/page";
 
 async function getData(): Promise<simplifiedProduct[]> {
   const query = `*[_type == "product"][0...50] | order(_createdAt desc) {
@@ -30,7 +31,13 @@ async function getData(): Promise<simplifiedProduct[]> {
   }
 }
 
-export default function Card({ className }: { className: string }) {
+export default function Card({
+  className,
+  filter,
+}: {
+  className: string;
+  filter: FilterState;
+}) {
   const [products, setProducts] = useState<simplifiedProduct[]>([]);
   const [activeSort, setActiveSort] = useState("Recommended"); // State to track active sort option
 
