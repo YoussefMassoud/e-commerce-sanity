@@ -45,8 +45,7 @@ export default async function ProductPage({
                 <span className="text-xl font-bold text-1 md:text-2xl">
                   ${data.price}
                 </span>
-               
-              </div>                  
+              </div>
 
               <div className="mt-4 mb-6 flex items-center gap-2 text-blue-500">
                 <Truck className="w-6 h-6" />
