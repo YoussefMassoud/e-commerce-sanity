@@ -23,7 +23,7 @@ export default async function Hero() {
         />
       </div>
       <div className="absolute inset-0 z-10  flex items-center justify-center bg-black bg-opacity-50">
-        <div className="text-center text-white space-y-7">
+        <div className="text-center text-white space-y-5">
           <h1 className="mb-4 text-4xl font-bold sm:text-5xl md:mb-8 md:text-6xl">
             Top Fashion for a top price!
           </h1>
@@ -31,11 +31,14 @@ export default async function Hero() {
             We sell only the most exclusive and high quality products for you.
             We are the best so come and shop with us.
           </p>
-          <Link href={"/shop"}>
+          <div className="py-2"> 
+            <Link href={"/shop"}>
             <Button className="bg-black text-white hover:bg-black px-8 ">
               Shop Now
             </Button>
           </Link>
+          </div>
+         
         </div>
       </div>
     </section>
