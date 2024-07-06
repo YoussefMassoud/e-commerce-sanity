@@ -1,18 +1,61 @@
+"use client"
 /* eslint-disable @next/next/no-img-element */
 import { Button } from "@/components/ui/button";
 import { client, urlFor } from "@/lib/sanity";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
-async function getData() {
-  const query = "*[_type == 'heroImage'][0]";
-  console.log("Hi from getData function!");
-  const data = await client.fetch(query);
-
-  return data;
+interface HeroProps {
+  data: {
+    image1: string; // Assuming image1 is a string URL
+    // Add other properties from your fetched data as needed
+  } | null; // data can be null initially
 }
 
-export default async function Hero() {
-  const data = await getData();
+export default function Hero() {
+  const [data, setData] = useState<HeroProps["data"]>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const query = "*[_type == 'heroImage'][0]";
+        const result = await client.fetch(query);
+        setData(result);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setData(null); // Handle error state or fallback data accordingly
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (!data) {
+    // Handle case where data is null (e.g., show loading state or error message)
+    return (
+      <section className="relative h-screen w-full">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/placeholder-image.jpg" // Example placeholder image
+            alt="Background"
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+        <div className="absolute inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="text-center text-white space-y-5">
+            <h1 className="mb-4 z-10 text-4xl font-bold sm:text-5xl md:mb-8 md:text-6xl">
+              Error Fetching Data
+            </h1>
+            <p className="max-w-md leading-relaxed text-gray-200 xl:text-lg mx-auto">
+              Sorry, there was an error fetching the data. Please try again
+              later.
+            </p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section className="relative h-screen w-full">
       <div className="absolute inset-0 z-0">

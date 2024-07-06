@@ -1,10 +1,9 @@
 import Hero from "./components/Hero";
-import Navbar from "./components/Nav";
 
-export default function Home() {
+export default function HomePage() {
+  
   return (
     <>
-      
       <Hero />
     </>
   );
