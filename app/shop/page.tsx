@@ -1,12 +1,14 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Card from "../components/Card";
 
 export default function Shop() {
   return (
-    <div className="flex lg:px-40 flex-col">
+    <div className="flex flex-row">
+    <div className="flex  flex-col ">
       {/* Home / Shop start */}
-      <div className="flex mt-20 flex-col justify-start gap-1 lg:px-40 px-4">
+      <div className="flex mt-20 flex-col justify-start gap-1 lg:px-12 px-4">
         <div className="flex flex-row gap-2">
           Home
           <p className="text-gray-400">/</p>
@@ -14,7 +16,7 @@ export default function Shop() {
         <h1 className="text-xl font-bold">Shop</h1>
       </div>
       {/* Home / Shop end */}
-      <div className="border-t-2 flex flex-col justify-start lg:px-40 px-4 mt-4 border-gray-200">
+      <div className="border-t-2 flex flex-col justify-start lg:px-12 px-4 mt-4 border-gray-200">
         <h1 className="text-lg font-bold mt-4">Filter by</h1>
 
         <div className="flex flex-col mt-2 ">
@@ -68,6 +70,9 @@ export default function Shop() {
           </div>
         </div>
       </div>
+    </div>    
+    <Card />
+
     </div>
   );
 }
