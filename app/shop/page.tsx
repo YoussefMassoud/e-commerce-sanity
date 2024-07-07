@@ -1,9 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState, ChangeEvent, FormEvent } from "react";
+import React, {
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+} from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Card from "../components/Card";
+import FilterMenu from "../components/FilterMenu";
 
 export interface FilterState {
   onSale: boolean;
@@ -32,43 +40,96 @@ export default function Shop() {
     },
   });
 
+  const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
+  const fromRef = useRef<HTMLInputElement>(null);
+  const toRef = useRef<HTMLInputElement>(null);
+
   const handleCheckboxChange = (
-    e: ChangeEvent<HTMLInputElement> | FormEvent<HTMLButtonElement>
+    id: string,
+    checked: React.FormEvent<HTMLButtonElement>
   ) => {
-    const target = e.target as HTMLInputElement;
-    const { id, checked } = target;
-    if (id === "onSale") {
-      setFilter((prev) => ({ ...prev, onSale: checked }));
-    } else if (id.startsWith("size-")) {
-      const size = id.split("-")[1];
-      setFilter((prev) => ({
-        ...prev,
-        sizes: { ...prev.sizes, [size]: checked },
-      }));
-    }
+    console.log("🚀 ~ Shop ~ id:", id);
+    console.log("🚀 ~ handleCheckboxChange ~ checked:", checked);
+
+    // if (id === "onSale") {
+    //   setFilter((prev) => ({ ...prev, onSale: checked }));
+    // } else if (id.startsWith("size-")) {
+    //   const size = id.split("-")[1];
+    //   setFilter((prev) => ({
+    //     ...prev,
+    //     sizes: { ...prev.sizes, [size]: checked },
+    //   }));
+    // }
   };
 
-  const handlePriceChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  const handlePriceChange = () => {
+    let fromValue = fromRef.current?.value || "";
+    let toValue = toRef.current?.value || "";
+
+    // Strip non-numeric characters from input
+    fromValue = fromValue.replace(/\D/g, "");
+    toValue = toValue.replace(/\D/g, "");
+
     setFilter((prev) => ({
       ...prev,
-      price: { ...prev.price, [name]: value },
+      price: { from: fromValue, to: toValue },
     }));
   };
 
+  const toggleFilterMenu = () => {
+    setIsFilterMenuOpen(!isFilterMenuOpen);
+  };
+
+  useEffect(() => {
+    if (isFilterMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isFilterMenuOpen]);
+
+  useEffect(() => {
+    console.log(filter);
+  }, [filter]);
+
   return (
-    <>
+    <div className="">
       <div className="flex lg:mt-20 mt-8 flex-col justify-start gap-1 lg:px-12 px-4">
-        <div className="flex flex-row gap-2">
-          Home
-          <p className="text-gray-400">/</p>
+        <div className="flex justify-between">
+          <div className="flex flex-row gap-2">
+            Home
+            <p className="text-gray-400">/</p>
+          </div>
+          {/** The filter button */}
+          <button
+            className="flex items-center gap-2 lg:hidden"
+            onClick={toggleFilterMenu}
+          >
+            Filter by
+            <img src="/filtermenu.svg" alt="filtermenu" />
+          </button>
         </div>
         <h1 className="text-xl font-bold">Shop</h1>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-4 w-full gap-4">
         {/** The filter menu */}
-        <div className="hidden lg:col-span-1 col-span-full lg:px-12 px-4 lg:flex none flex-col">
+
+        <FilterMenu
+          filter={filter}
+          isOpen={isFilterMenuOpen}
+          onClose={toggleFilterMenu}
+          onCheckboxChange={handleCheckboxChange}
+          onPriceChange={handlePriceChange}
+          fromRef={fromRef}
+          toRef={toRef}
+        />
+
+        {/** The desktop filter menu */}
+        <div className="hidden lg:flex lg:col-span-1 flex-col lg:px-12 px-4 mt-8 lg:mt-0">
           <div className="border-t flex flex-col justify-start mt-4 border-gray-200">
             <h1 className="text-lg font-bold mt-4">Filter by</h1>
             {/* Discounts section */}
@@ -78,7 +139,9 @@ export default function Shop() {
                 <Checkbox
                   id="onSale"
                   checked={filter.onSale}
-                  onChange={handleCheckboxChange}
+                  onChange={(checked) =>
+                    handleCheckboxChange("onSale", checked)
+                  }
                 />
                 <Label htmlFor="onSale" className="text-gray-400 px-2">
                   On Sale
@@ -93,7 +156,9 @@ export default function Shop() {
                 <Checkbox
                   id="size-large"
                   checked={filter.sizes.large}
-                  onChange={handleCheckboxChange}
+                  onChange={(checked) =>
+                    handleCheckboxChange("size-large", checked)
+                  }
                 />
                 <Label htmlFor="size-large" className="text-gray-400 px-2">
                   Large
@@ -103,7 +168,9 @@ export default function Shop() {
                 <Checkbox
                   id="size-medium"
                   checked={filter.sizes.medium}
-                  onChange={handleCheckboxChange}
+                  onChange={(checked) =>
+                    handleCheckboxChange("size-medium", checked)
+                  }
                 />
                 <Label htmlFor="size-medium" className="text-gray-400 px-2">
                   Medium
@@ -113,7 +180,9 @@ export default function Shop() {
                 <Checkbox
                   id="size-small"
                   checked={filter.sizes.small}
-                  onChange={handleCheckboxChange}
+                  onChange={(checked) =>
+                    handleCheckboxChange("size-small", checked)
+                  }
                 />
                 <Label htmlFor="size-small" className="text-gray-400 px-2">
                   Small
@@ -128,6 +197,7 @@ export default function Shop() {
                 <div className="flex flex-col space-y-2">
                   <Label className="font-semibold">From</Label>
                   <Input
+                    ref={fromRef}
                     placeholder="EGP 0"
                     name="from"
                     value={filter.price.from}
@@ -137,6 +207,7 @@ export default function Shop() {
                 <div className="flex flex-col space-y-2">
                   <Label className="font-semibold">To</Label>
                   <Input
+                    ref={toRef}
                     placeholder="EGP 0"
                     name="to"
                     value={filter.price.to}
@@ -150,6 +221,6 @@ export default function Shop() {
         {/** The cards div */}
         <Card className="lg:col-span-3 col-span-4" filter={filter} />
       </div>
-    </>
+    </div>
   );
 }

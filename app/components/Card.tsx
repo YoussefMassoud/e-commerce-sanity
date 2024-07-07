@@ -55,7 +55,7 @@ export default function Card({
   };
 
   return (
-    <div className={`bg-3 ${className}`}>
+    <div className={`${className}`}>
       <div className="mx-auto max-w-2xl px-4 pt-10 sm:px-6 sm:pt-10 lg:max-w-7xl lg:px-8">
         {/* Round Products Section */}
         <div className="flex justify-between items-center">
