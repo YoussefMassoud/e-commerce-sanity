@@ -41,7 +41,7 @@ export default async function ProductPage({
               {/* price section */}
               <div className="flex items-end gap-2">
                 <span className="text-xl font-bold text-1 md:text-2xl">
-                  ${data.price}
+                  EGP {data.price}
                 </span>
               </div>
 
