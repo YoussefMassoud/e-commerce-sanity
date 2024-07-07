@@ -44,22 +44,16 @@ export default function Shop() {
   const fromRef = useRef<HTMLInputElement>(null);
   const toRef = useRef<HTMLInputElement>(null);
 
-  const handleCheckboxChange = (
-    id: string,
-    checked: React.FormEvent<HTMLButtonElement>
-  ) => {
-    console.log("🚀 ~ Shop ~ id:", id);
-    console.log("🚀 ~ handleCheckboxChange ~ checked:", checked);
-
-    // if (id === "onSale") {
-    //   setFilter((prev) => ({ ...prev, onSale: checked }));
-    // } else if (id.startsWith("size-")) {
-    //   const size = id.split("-")[1];
-    //   setFilter((prev) => ({
-    //     ...prev,
-    //     sizes: { ...prev.sizes, [size]: checked },
-    //   }));
-    // }
+  const handleCheckboxChange = (id: string, checked: boolean) => {
+    if (id === "onSale") {
+      setFilter((prev) => ({ ...prev, onSale: checked }));
+    } else if (id.startsWith("size-")) {
+      const size = id.split("-")[1];
+      setFilter((prev) => ({
+        ...prev,
+        sizes: { ...prev.sizes, [size]: checked },
+      }));
+    }
   };
 
   const handlePriceChange = () => {
@@ -139,7 +133,7 @@ export default function Shop() {
                 <Checkbox
                   id="onSale"
                   checked={filter.onSale}
-                  onChange={(checked) =>
+                  onCheckedChange={(checked) =>
                     handleCheckboxChange("onSale", checked)
                   }
                 />
@@ -156,7 +150,7 @@ export default function Shop() {
                 <Checkbox
                   id="size-large"
                   checked={filter.sizes.large}
-                  onChange={(checked) =>
+                  onCheckedChange={(checked) =>
                     handleCheckboxChange("size-large", checked)
                   }
                 />
@@ -168,7 +162,7 @@ export default function Shop() {
                 <Checkbox
                   id="size-medium"
                   checked={filter.sizes.medium}
-                  onChange={(checked) =>
+                  onCheckedChange={(checked) =>
                     handleCheckboxChange("size-medium", checked)
                   }
                 />
@@ -180,7 +174,7 @@ export default function Shop() {
                 <Checkbox
                   id="size-small"
                   checked={filter.sizes.small}
-                  onChange={(checked) =>
+                  onCheckedChange={(checked) =>
                     handleCheckboxChange("size-small", checked)
                   }
                 />

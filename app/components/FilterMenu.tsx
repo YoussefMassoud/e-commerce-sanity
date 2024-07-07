@@ -11,10 +11,7 @@ interface Props {
   filter: FilterState;
   isOpen: boolean;
   onClose: () => void;
-  onCheckboxChange: (
-    id: string,
-    checked: React.FormEvent<HTMLButtonElement>
-  ) => void;
+  onCheckboxChange: (id: string, checked: boolean) => void;
   onPriceChange: () => void;
   fromRef: React.RefObject<HTMLInputElement>;
   toRef: React.RefObject<HTMLInputElement>;
@@ -47,7 +44,9 @@ const FilterMenu: React.FC<Props> = ({
               <Checkbox
                 id="onSale"
                 checked={filter.onSale}
-                onChange={(checked) => onCheckboxChange("onSale", checked)}
+                onCheckedChange={(checked) =>
+                  onCheckboxChange("onSale", checked)
+                }
               />
               <Label htmlFor="onSale" className="text-gray-400 px-2">
                 On Sale
@@ -62,7 +61,7 @@ const FilterMenu: React.FC<Props> = ({
               <Checkbox
                 id="size-large"
                 checked={filter.sizes.large}
-                onChange={(checked) => {
+                onCheckedChange={(checked) => {
                   console.log("🚀 ~ Shop ~ checked:", checked);
 
                   onCheckboxChange("size-large", checked);
@@ -76,7 +75,9 @@ const FilterMenu: React.FC<Props> = ({
               <Checkbox
                 id="size-medium"
                 checked={filter.sizes.medium}
-                onChange={(checked) => onCheckboxChange("size-medium", checked)}
+                onCheckedChange={(checked) =>
+                  onCheckboxChange("size-medium", checked)
+                }
               />
               <Label htmlFor="size-medium" className="text-gray-400 px-2">
                 Medium
@@ -86,7 +87,9 @@ const FilterMenu: React.FC<Props> = ({
               <Checkbox
                 id="size-small"
                 checked={filter.sizes.small}
-                onChange={(checked) => onCheckboxChange("size-small", checked)}
+                onCheckedChange={(checked) =>
+                  onCheckboxChange("size-small", checked)
+                }
               />
               <Label htmlFor="size-small" className="text-gray-400 px-2">
                 Small
