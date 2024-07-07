@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { urlFor } from "@/lib/sanity";
+import { Trash2 } from "lucide-react";
 
 async function sendTelegramMessage(formData: any, productName: string) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
@@ -88,11 +89,7 @@ export default function TelegramDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          className="bg-black text-white "
-        >
-          Shop Now
-        </Button>
+        <Button className="bg-black text-white ">Shop Now</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -135,17 +132,38 @@ export default function TelegramDialog({
             </div>
           )}
           {step === 2 && (
-            <div className="grid flex-col gap-4 py-4">
+            <div className="grid flex-col gap-4  py-10">
               <Card>
-                <CardContent className="">
-                  <img
-                    src={urlFor(productImage[0]).url()}
-                    alt="productImage"
-                    className="w-full h-full"
-                  />
-                  <p className="mt-2 text-lg font-semibold">{productName}</p>
+                <CardContent className="flex py-2 flex-col justify-start">
+                  <div className="flex flex-row justify-between items-center">
+                    <img
+                      src={urlFor(productImage[0]).url()}
+                      alt="productImage"
+                      className="max-w-20 max-h-20"
+                    />
+                    <div className="flex flex-col px-2 ">
+                      <p className="text-lg py-2 font-semibold">{productName}</p>
+                      <p className="text-lg py-2 font-semibold">Size: M</p>
+                    </div>
+                    <div className="flex flex-col justify-end py-2 mt-4 items-end">
+                      <p className="text-lg font-semibold">$125</p>
+                      <div className="flex items-center space-x-2 mt-2">
+                       
+                        <div className="flex items-center py-2">
+                           <button className="text-red-500"><Trash2  /></button>
+                          <span className="px-2">1</span>
+                          <button className="px-2 py-1 border rounded">
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
+              <div className="mt-4">
+                <button className="text-black font-semibold">+ Add other products</button>
+              </div>
             </div>
           )}
           <DialogFooter>
