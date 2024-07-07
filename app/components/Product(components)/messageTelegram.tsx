@@ -89,8 +89,7 @@ export default function TelegramDialog({
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant="outline"
-          className="bg-black text-white hover:bg-black hover:text-gray-100"
+          className="bg-black text-white "
         >
           Shop Now
         </Button>
