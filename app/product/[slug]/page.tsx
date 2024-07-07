@@ -1,19 +1,6 @@
-"use clinet";
-
 import ImageGallery from "@/app/components/Product(components)/ImageGallery";
+import MessageTelegram from "@/app/components/Product(components)/messageTelegram";
 import { fullProduct } from "@/app/interface";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { client } from "@/lib/sanity";
 import { Truck } from "lucide-react";
 
@@ -67,43 +54,10 @@ export default async function ProductPage({
                 {data.description}
               </p>
               <div className="py-10 px-4">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="bg-black text-white hover:bg-black hover:text-gray-100"
-                    >
-                      Shop Now
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Ship To</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label  className="text-right">
-                          Name
-                        </Label>
-                        <Input
-                          className="col-span-3"
-                          placeholder="Enter your name"
-                        />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Phone</Label>
-                        <Input type="number" className="col-span-3" placeholder="+201063647856" />
-                      </div>
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label className="text-right">Address</Label>
-                        <Input  className="col-span-3" placeholder="Enter your address" />
-                      </div>
-                    </div>
-                    <DialogFooter>
-                      <Button type="submit">Next Step</Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
+                <MessageTelegram
+                  productName={data.name}
+                  productImage={data.images}
+                />
               </div>
             </div>
           </div>
