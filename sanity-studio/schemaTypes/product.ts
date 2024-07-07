@@ -32,5 +32,40 @@ export default {
         source: 'name',
       },
     },
+    {
+      name: 'sale',
+      type: 'object',
+      title: 'Sale',
+      fields: [
+        {
+          name: 'on',
+          type: 'boolean',
+          title: 'On Sale',
+        },
+        {
+          name: 'from',
+          type: 'string',
+          title: 'Sale From',
+        },
+        {
+          name: 'to',
+          type: 'string',
+          title: 'Sale To',
+        },
+        {
+          name: 'saved',
+          type: 'string',
+          title: 'Saved Amount',
+        },
+      ],
+    },
+    {
+      name: 'date',
+      type: 'date',
+      title: 'Date',
+      options: {
+        defaultValue: new Date().toISOString().split('T')[0], // Sets the default value to today's date in YYYY-MM-DD format
+      },
+    },
   ],
 }
