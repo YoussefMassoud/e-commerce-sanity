@@ -5,6 +5,13 @@ export interface simplifiedProduct {
   slug: string;
   categoryName: string;
   name: string;
+  sale: {
+    on: boolean;
+    to: string;
+    from: string;
+    saved: string;
+  } | null;
+  date: string;
 }
 
 export interface fullProduct {
