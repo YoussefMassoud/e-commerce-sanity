@@ -58,7 +58,7 @@ export default async function ProductPage({
                     <h1 className="text-[14px] font-normal flex flex-row gap-6 text-black">
                       <span className="text-gray-400 line-through">
                         EGP {data.sale.from}
-                      </span>{" "}
+                      </span>
                       <div className="bg-gray-300 py-1 rounded-xl px-4 flex font-semibold items-center  text-black">
                         <Tag className="text-black w-4 h-4 mr-1 " /> Save -
                         {data.sale.saved}%
@@ -85,6 +85,7 @@ export default async function ProductPage({
                 <MessageTelegram
                   productName={data.name}
                   productImage={data.images}
+                  productPrice={data.price}
                 />
                  <Button className="">Add to shopping bag</Button>
               </div>

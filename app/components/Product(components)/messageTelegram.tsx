@@ -17,7 +17,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { urlFor } from "@/lib/sanity";
 import { Trash2 } from "lucide-react";
 
-async function sendTelegramMessage(formData: any, productName: string) {
+async function sendTelegramMessage(formData: any, productName: string ,productPrice:number) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
   const chat_id = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
   const message = `
@@ -26,6 +26,7 @@ async function sendTelegramMessage(formData: any, productName: string) {
     Phone: ${formData.phone}
     Address: ${formData.address}
     Product Name: ${productName}
+    product Price: ${productPrice}
   `;
   const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
 
@@ -47,11 +48,14 @@ async function sendTelegramMessage(formData: any, productName: string) {
 interface TelegramDialogProps {
   productName: string;
   productImage: string;
+  productPrice: number;
 }
 
 export default function TelegramDialog({
   productName,
   productImage,
+  productPrice,
+
 }: TelegramDialogProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -66,7 +70,7 @@ export default function TelegramDialog({
     if (step === 1) {
       setStep(2);
     } else {
-      const success = await sendTelegramMessage(formData, productName);
+      const success = await sendTelegramMessage(formData, productName, productPrice);
       if (success) {
         setFormData({ name: "", phone: "", address: "" });
         router.push("/success");
@@ -146,7 +150,8 @@ export default function TelegramDialog({
                       <p className="text-lg py-2 font-semibold">Size: M</p>
                     </div>
                     <div className="flex flex-col justify-end py-2 mt-4 items-end">
-                      <p className="text-lg font-semibold">$125</p>
+                      <h1><p className="text-lg font-semibold"> EGP{productPrice}</p></h1>
+                      
                       <div className="flex items-center space-x-2 mt-2">
                        
                         <div className="flex items-center py-2">
