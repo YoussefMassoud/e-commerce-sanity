@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
+import { urlFor } from "@/lib/sanity";
 
 async function sendTelegramMessage(formData: any, productName: string) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
@@ -139,7 +140,7 @@ export default function TelegramDialog({
               <Card>
                 <CardContent className="">
                   <img
-                    src={productImage}
+                    src={urlFor(productImage[0]).url()}
                     alt="productImage"
                     className="w-full h-full"
                   />
@@ -154,9 +155,7 @@ export default function TelegramDialog({
                 Back
               </Button>
             )}
-              <Button type="submit">
-                {step === 1 ? "Next Step" : "Submit"}
-              </Button>
+            <Button type="submit">{step === 1 ? "Next Step" : "Submit"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
