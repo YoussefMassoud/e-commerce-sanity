@@ -4,6 +4,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div className="mt-16">
+      {/** Upper section */}
       <div className="flex w-full flex-col justify-center items-center border-y border-gray-300 gap-6 px-6 py-5">
         <div className="flex gap-4 justify-center items-center">
           <a href="tel:0111111111">
@@ -21,16 +22,27 @@ const Footer = () => {
           </span>
         </div>
       </div>
-      <div className="flex justify-between w-full py-3 px-6">
-        <div className="flex gap-2 w-full">
+      {/** Lower section */}
+      <div className="flex justify-between w-full py-3 lg:px-6 px-2">
+        {/** Left lower section */}
+
+        <div className="flex lg:gap-2 gap-0 w-full">
           <img className="w-[34px] h-6" src="/visa.svg" alt="visa" />
           <img className="w-[34px] h-6" src="/mastercard.svg" alt="visa" />
           <img className="w-[34px] h-6" src="/miza.svg" alt="visa" />
           <img className="w-[34px] h-6" src="/valu.svg" alt="visa" />
         </div>
+        {/** Middle lower section */}
+
         <div className="w-full flex justify-center">
-          <img src="/footerlogo.svg" className="w-[116px]" alt="logo" />
+          <img
+            src="/footerlogo.svg"
+            className="lg:w-[116px] w-[90px] "
+            alt="logo"
+          />
         </div>
+        {/** Right lower section */}
+
         <div className="w-full flex justify-end">
           <h1 className="text-[14px]  font-sans">© 2024, Allure_eg</h1>
         </div>
