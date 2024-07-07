@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Card from "../components/Card";
 import FilterMenu from "../components/FilterMenu";
+import Footer from "../components/Footer";
 
 export interface FilterState {
   onSale: boolean;
@@ -90,7 +91,8 @@ export default function Shop() {
   }, [filter]);
 
   return (
-    <div className="">
+   <>
+   <div className="">
       <div className="flex lg:mt-20 mt-8 flex-col justify-start gap-1 lg:px-12 px-4">
         <div className="flex justify-between">
           <div className="flex flex-row gap-2">
@@ -215,6 +217,8 @@ export default function Shop() {
         {/** The cards div */}
         <Card className="lg:col-span-3 col-span-4" filter={filter} />
       </div>
-    </div>
+      </div>
+      <Footer />
+      </>
   );
 }
