@@ -131,7 +131,7 @@ export default function Shop() {
                   <Checkbox
                     id="onSale"
                     checked={filter.onSale}
-                    onCheckedChange={(checked) =>
+                    onCheckedChange={(checked :boolean) =>
                       handleCheckboxChange("onSale", checked)
                     }
                   />
@@ -148,7 +148,7 @@ export default function Shop() {
                   <Checkbox
                     id="size-large"
                     checked={filter.sizes.large}
-                    onCheckedChange={(checked) =>
+                    onCheckedChange={(checked :boolean) =>
                       handleCheckboxChange("size-large", checked)
                     }
                   />
@@ -160,7 +160,7 @@ export default function Shop() {
                   <Checkbox
                     id="size-medium"
                     checked={filter.sizes.medium}
-                    onCheckedChange={(checked) =>
+                    onCheckedChange={(checked :boolean) =>
                       handleCheckboxChange("size-medium", checked)
                     }
                   />
@@ -172,7 +172,7 @@ export default function Shop() {
                   <Checkbox
                     id="size-small"
                     checked={filter.sizes.small}
-                    onCheckedChange={(checked) =>
+                    onCheckedChange={(checked :boolean) =>
                       handleCheckboxChange("size-small", checked)
                     }
                   />
