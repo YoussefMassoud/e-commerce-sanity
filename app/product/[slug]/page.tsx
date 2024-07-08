@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { client } from "@/lib/sanity";
 import { DollarSign, Landmark, Tag, Truck } from "lucide-react";
 import { BadgePercent } from "lucide-react";
+import { ToastContainer } from "react-toastify";
 
 async function getData(slug: string) {
   const query = `*[_type == "product" && slug.current == "${slug}"][0] {
@@ -116,6 +117,8 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
+      <ToastContainer  />
+
     </>
   );
 }

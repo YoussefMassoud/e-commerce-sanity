@@ -16,6 +16,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { urlFor } from "@/lib/sanity";
 import { Trash2 } from "lucide-react";
+import { toast } from "react-toastify"; // Import toast
+import "react-toastify/dist/ReactToastify.css"; 
 
 async function sendTelegramMessage(formData: any, productName: string ,productPrice:number) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
@@ -68,12 +70,18 @@ export default function TelegramDialog({
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (step === 1) {
-      setStep(2);
+      if (!formData.name || !formData.phone || !formData.address) {
+        toast.error("Please fill in all required fields.");
+        return; 
+      }
+      setStep(2); 
     } else {
       const success = await sendTelegramMessage(formData, productName, productPrice);
       if (success) {
         setFormData({ name: "", phone: "", address: "" });
         router.push("/success");
+        toast.success(" Your Order Request Done!");
+
       }
     }
   };

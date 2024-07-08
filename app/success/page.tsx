@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Success() {
   return (
-    <div className="h-screen">
+    <div className="h-fit">
       <div className="mt-32 md:max-w-[50vw] mx-auto">
         <CheckCheck className="text-green-600 w-16 h-16 mx-auto my-6" />
         <div className="text-center">
