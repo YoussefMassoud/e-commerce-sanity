@@ -4,6 +4,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import CartProduct from "./CartProduct";
 
 const links = [
   {
@@ -42,10 +43,8 @@ export default function Nav() {
             />
           </Link>
           <div className="flex w-full justify-end gap-5 items-center">
-            <div className="flex items-center gap-1">
-              <img className="w-[20px] h-[20px]" src="/cart.svg" alt="cart" />
-              {/** Cart items number */}
-              <h1 className="text-gray-400 text-[14px] font-normal">{"0"}</h1>
+            <div className="flex items-center px-2">
+              <CartProduct />
             </div>
             <img className="w-[20px]" src="/search.svg" alt="search" />
             <h1 className="text-[15px] font-semibold">عربي</h1>
