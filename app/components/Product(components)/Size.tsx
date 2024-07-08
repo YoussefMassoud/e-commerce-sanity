@@ -30,13 +30,9 @@ const SizeButton = styled.button<{
   padding: 2px 12px 2px 12px;
 `;
 
-const SizeText = styled.div`
-  margin-right: 1em;
-`;
-
 const Size: React.FC = () => {
   const sizes = ["S", "M", "L", "XL", "XXL"];
-  const [activeSize, setActiveSize] = useState<string>("");
+  const [activeSize, setActiveSize] = useState("");
 
   const handleSizeClick = (size: string) => {
     setActiveSize(size);
