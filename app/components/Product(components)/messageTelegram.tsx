@@ -18,6 +18,7 @@ import { urlFor } from "@/lib/sanity";
 import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify"; // Import toast
 import "react-toastify/dist/ReactToastify.css"; 
+import Link from "next/link";
 
 async function sendTelegramMessage(formData: any, productName: string ,productPrice:number) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
@@ -151,7 +152,7 @@ export default function TelegramDialog({
                     <img
                       src={urlFor(productImage[0]).url()}
                       alt="productImage"
-                      className="max-w-20 max-h-20"
+                      className="max-w-20 max-h-24 min-w-20 "
                     />
                     <div className="flex flex-col px-2 ">
                       <p className="text-lg py-2 font-semibold">{productName}</p>
@@ -174,9 +175,11 @@ export default function TelegramDialog({
                   </div>
                 </CardContent>
               </Card>
+              <Link href={"/shop"}>
               <div className="mt-4">
                 <button className="text-black font-semibold">+ Add other products</button>
               </div>
+              </Link>
             </div>
           )}
           <DialogFooter>
