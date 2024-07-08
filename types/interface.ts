@@ -3,7 +3,15 @@ export interface simplifiedProduct {
   imageUrl: string;
   price: number;
   slug: string;
-  categoryName: string;
+  name: string;
+}
+
+export interface cartProduct {
+  _id: string;
+  imageUrl: string;
+  price: number;
+  size: string;
+  count: number;
   name: string;
   sale: {
     on: boolean;
@@ -11,12 +19,12 @@ export interface simplifiedProduct {
     from: string;
     saved: string;
   } | null;
-  date: string;
 }
 
 export interface fullProduct {
   _id: string;
   images: any;
+  imageUrl: string;
   price: number;
   slug: string;
   categoryName: string;
@@ -28,4 +36,11 @@ export interface fullProduct {
     from: string;
     saved: string;
   } | null;
+  date: string;
+}
+
+export interface sizeState {
+  large: boolean;
+  small: boolean;
+  medium: boolean;
 }

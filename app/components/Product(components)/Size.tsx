@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -30,11 +30,35 @@ const SizeButton = styled.button<{
   padding: 2px 12px 2px 12px;
 `;
 
-const Size: React.FC = () => {
-  const sizes = ["S", "M", "L", "XL", "XXL"];
+interface SizeProps {
+  size: string;
+  setSize: Dispatch<SetStateAction<string>>;
+}
+
+const Size = ({ size, setSize }: SizeProps) => {
+  const sizes = ["S", "M", "L"];
   const [activeSize, setActiveSize] = useState("");
 
   const handleSizeClick = (size: string) => {
+    switch (size) {
+      case "S": {
+        setSize("Small");
+        break; // Add break to prevent fall-through
+      }
+      case "M": {
+        setSize("Medium");
+        break; // Add break to prevent fall-through
+      }
+      case "L": {
+        setSize("Large");
+        break; // Add break to prevent fall-through
+      }
+      default: {
+        // Optionally, you can add a default case to handle unexpected values
+        console.warn("Unknown size:", size);
+        break;
+      }
+    }
     setActiveSize(size);
   };
 

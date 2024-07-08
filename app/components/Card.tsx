@@ -4,7 +4,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { client } from "@/lib/sanity";
-import { simplifiedProduct } from "../interface";
+import { fullProduct, simplifiedProduct } from "../../types/interface";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FilterState } from "../shop/page";
 
-async function getData(): Promise<simplifiedProduct[]> {
+async function getData(): Promise<fullProduct[]> {
   const query = `*[_type == "product"][0...50] | order(_createdAt desc) {
         _id,
         name,
@@ -42,7 +42,7 @@ export default function Card({
   filter: FilterState;
 }) {
   const [activeSort, setActiveSort] = useState("Recommended"); // State to track active sort option
-  const [products, setProducts] = useState<simplifiedProduct[]>([]);
+  const [products, setProducts] = useState<fullProduct[]>([]);
 
   useEffect(() => {
     async function fetchData() {
