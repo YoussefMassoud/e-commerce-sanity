@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { client } from "@/lib/sanity";
-import { DollarSign, Landmark, Tag, Truck } from "lucide-react";
-import { BadgePercent } from "lucide-react";
+import { Landmark, Tag, Truck } from "lucide-react";
 import { ToastContainer } from "react-toastify";
 
 async function getData(slug: string) {
@@ -74,23 +73,22 @@ export default async function ProductPage({
                   <Size />
                 </div>
               </div>
-             
+
               <div className="py-2 flex flex-row space-x-8 ">
-                <Input 
-                type="number"
-                typeof="number"
-                placeholder="1"
-                className="max-w-20 "
-                
+                <Input
+                  type="number"
+                  typeof="number"
+                  placeholder="1"
+                  className="max-w-20 "
                 />
                 <MessageTelegram
                   productName={data.name}
                   productImage={data.images}
                   productPrice={data.price}
                 />
-                 <Button className="">Add to shopping bag</Button>
+                <Button className="">Add to shopping bag</Button>
               </div>
-              
+
               <div className="mt-4 mb-6 justify-center flex items-center gap-2 border-b   border-t  border-gray-400 ">
                 <span className="text-md flex-col mb-5 flex text-gray-600">
                   <span className="flex justify-center mt-5">
@@ -117,8 +115,7 @@ export default async function ProductPage({
           </div>
         </div>
       </div>
-      <ToastContainer  />
-
+      <ToastContainer />
     </>
   );
 }
