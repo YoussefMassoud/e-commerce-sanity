@@ -89,19 +89,23 @@ export default async function ProductPage({
                 <Button className="">Add to shopping bag</Button>
               </div>
 
-              <div className="mt-4 mb-6 justify-center flex items-center gap-2 border-b   border-t  border-gray-400 ">
-                <span className="text-md flex-col mb-5 flex text-gray-600">
+              <div className="mt-4 mb-6 justify-center flex items-center gap-2    border-t  border-gray-400 ">
+                <span className="text-md justify-between w-full px-20 py-4 flex text-gray-600">
                   <span className="flex justify-center mt-5">
                     <Truck className="w-6 h-6 " />
                   </span>
-                  Shipping fees calculated at checkout
-                  <span>Estimated delivery within 2–4 working days.</span>
+                  <span className="flex flex-col">
+                    Shipping fees calculated at checkout
+                    <span className="text-gray-400">
+                      Estimated delivery within 2–4 working days.
+                    </span>
+                  </span>
                 </span>
               </div>
 
-              <div className="mt-4 mb-6 flex justify-center items-center gap-2 border-b   border-t  border-gray-400 ">
-                <span className="text-md flex-col mb-5 flex text-gray-600">
-                  <span className="flex justify-center mt-5">
+              <div className=" mb-6 flex justify-center items-center gap-2 border-b   border-t  border-gray-400 ">
+                <span className="text-md w-full justify-between items-center px-20 flex text-gray-600 py-5">
+                  <span className="flex">
                     <Landmark className="w-6 h-6 " />
                   </span>
                   Cash on delivery & online payments

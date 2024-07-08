@@ -38,7 +38,7 @@ export default function ImageGallery({ images }: iAppProps) {
               width={500}
               height={500}
               alt="photo"
-              className="h-full w-full object-cover object-center cursor-pointer lg:max-w-[350px] lg:max-h-[350px] max-w-[150px] max-h-[150px]"
+              className="max-h-[120px] w-full object-cover object-center cursor-pointer lg:max-w-[350px]  max-w-[150px] "
               onClick={() => handleSmallImageClick(image)}
               loading="lazy"
             />
@@ -52,7 +52,7 @@ export default function ImageGallery({ images }: iAppProps) {
           alt="Photo"
           width={500}
           height={500}
-          className="h-full w-full object-cover object-center"
+          className="max-h-[620px] w-full object-cover object-center"
           loading="lazy"
         />
 
