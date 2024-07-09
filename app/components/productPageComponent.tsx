@@ -132,7 +132,7 @@ const ProductPageComponent = ({ data }: { data: fullProduct }) => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 };

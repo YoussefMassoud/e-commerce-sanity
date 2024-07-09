@@ -13,12 +13,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent } from "@/components/ui/card";
-import { urlFor } from "@/lib/sanity";
-import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify"; // Import toast
 import "react-toastify/dist/ReactToastify.css";
-import Link from "next/link";
 
 async function sendTelegramMessage(
   formData: any,
