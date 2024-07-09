@@ -19,7 +19,7 @@ import Link from "next/link";
 export default function CartProduct() {
   const { cart, updateProductCount, removeFromCart } = useCart();
   const handleOpenChange = () => {};
-  
+
   return (
     <>
       <Sheet>
@@ -48,7 +48,9 @@ export default function CartProduct() {
                     />
                     <div className="flex flex-col px-2 ">
                       <p className="text-lg py-2 font-semibold">{item.name}</p>
-                      <p className="text-lg py-2 font-semibold">Size: M</p>
+                      <p className="text-lg py-2 font-semibold">
+                        Size: {item.size}
+                      </p>
                     </div>
                     <div className="flex flex-col justify-end py-2 mt-4 items-end">
                       <h1>
