@@ -2,7 +2,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { act, useEffect, useState } from "react";
 import { client } from "@/lib/sanity";
 import { fullProduct, simplifiedProduct } from "../../types/interface";
 import {
@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { FilterState } from "../shop/page";
+import { sort } from "../(methods)/sort";
 
 async function getData(): Promise<fullProduct[]> {
   const query = `*[_type == "product"][0...50] | order(_createdAt desc) {
@@ -43,6 +44,7 @@ export default function Card({
 }) {
   const [activeSort, setActiveSort] = useState("Recommended"); // State to track active sort option
   const [products, setProducts] = useState<fullProduct[]>([]);
+  const [sortedProducts, setSortedProducts] = useState<fullProduct[]>([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -51,6 +53,10 @@ export default function Card({
     }
     fetchData();
   }, []);
+
+  useEffect(() => {
+    setSortedProducts(sort(products, activeSort));
+  }, [activeSort]);
 
   // Function to handle sorting change
   const handleSortChange = (sortOption: string) => {
@@ -101,51 +107,102 @@ export default function Card({
           </DropdownMenu>
         </div>
         <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {products.map((product) => (
-            <div key={product._id} className="group relative">
-              <div className="aspect-square w-full overflow-hidden rounded-md bg-2 group-hover:opacity-75 lg:h-80">
-                <Link href={`/product/${product.slug}`} legacyBehavior>
-                  <img
-                    src={product.imageUrl}
-                    alt="Product image"
-                    className="w-full h-full object-cover object-center lg:h-full lg:w-full"
-                    width={300}
-                    height={300}
-                    loading="lazy"
-                  />
-                </Link>
-              </div>
-              <div className="mt-4 flex justify-between flex-col text-m font-bold text-gray-600">
-                <Link href={`/product/${product.slug}`} legacyBehavior>
-                  {product.name}
-                </Link>
-                <h1 className="text-black font-normal text-[14px]">3 sizes</h1>
-                {!product.sale?.on ? (
-                  <h1 className="text-black font-normal text-[14px] ">
-                    EGP{" "}
-                    <span className="font-semibold text-[16px]">
-                      {product.price}
-                    </span>
+          {activeSort === "Recommended" &&
+            products.map((product) => (
+              <div key={product._id} className="group relative">
+                <div className="aspect-square w-full overflow-hidden rounded-md bg-2 group-hover:opacity-75 lg:h-80">
+                  <Link href={`/product/${product.slug}`} legacyBehavior>
+                    <img
+                      src={product.imageUrl}
+                      alt="Product image"
+                      className="w-full h-full object-cover object-center lg:h-full lg:w-full"
+                      width={300}
+                      height={300}
+                      loading="lazy"
+                    />
+                  </Link>
+                </div>
+                <div className="mt-4 flex justify-between flex-col text-m font-bold text-gray-600">
+                  <Link href={`/product/${product.slug}`} legacyBehavior>
+                    {product.name}
+                  </Link>
+                  <h1 className="text-black font-normal text-[14px]">
+                    3 sizes
                   </h1>
-                ) : (
-                  <>
+                  {!product.sale?.on ? (
                     <h1 className="text-black font-normal text-[14px] ">
                       EGP{" "}
                       <span className="font-semibold text-[16px]">
-                        {product.sale.to}
+                        {product.price}
                       </span>
                     </h1>
-                    <h1 className="text-[14px] font-normal text-black">
-                      <span className="text-gray-400 line-through">
-                        EGP {product.sale.from}
-                      </span>{" "}
-                      -{product.sale.saved}%
-                    </h1>
-                  </>
-                )}
+                  ) : (
+                    <>
+                      <h1 className="text-black font-normal text-[14px] ">
+                        EGP{" "}
+                        <span className="font-semibold text-[16px]">
+                          {product.sale.to}
+                        </span>
+                      </h1>
+                      <h1 className="text-[14px] font-normal text-black">
+                        <span className="text-gray-400 line-through">
+                          EGP {product.sale.from}
+                        </span>{" "}
+                        -{product.sale.saved}%
+                      </h1>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          {activeSort !== "Recommended" &&
+            sortedProducts.map((product) => (
+              <div key={product._id} className="group relative">
+                <div className="aspect-square w-full overflow-hidden rounded-md bg-2 group-hover:opacity-75 lg:h-80">
+                  <Link href={`/product/${product.slug}`} legacyBehavior>
+                    <img
+                      src={product.imageUrl}
+                      alt="Product image"
+                      className="w-full h-full object-cover object-center lg:h-full lg:w-full"
+                      width={300}
+                      height={300}
+                      loading="lazy"
+                    />
+                  </Link>
+                </div>
+                <div className="mt-4 flex justify-between flex-col text-m font-bold text-gray-600">
+                  <Link href={`/product/${product.slug}`} legacyBehavior>
+                    {product.name}
+                  </Link>
+                  <h1 className="text-black font-normal text-[14px]">
+                    3 sizes
+                  </h1>
+                  {!product.sale?.on ? (
+                    <h1 className="text-black font-normal text-[14px] ">
+                      EGP{" "}
+                      <span className="font-semibold text-[16px]">
+                        {product.price}
+                      </span>
+                    </h1>
+                  ) : (
+                    <>
+                      <h1 className="text-black font-normal text-[14px] ">
+                        EGP{" "}
+                        <span className="font-semibold text-[16px]">
+                          {product.sale.to}
+                        </span>
+                      </h1>
+                      <h1 className="text-[14px] font-normal text-black">
+                        <span className="text-gray-400 line-through">
+                          EGP {product.sale.from}
+                        </span>{" "}
+                        -{product.sale.saved}%
+                      </h1>
+                    </>
+                  )}
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>
