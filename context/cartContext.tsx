@@ -19,7 +19,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       const existingProduct = prevCart.find((p) => p._id === product._id);
       if (existingProduct) {
         return prevCart.map((p) =>
-          p._id === product._id ? { ...p, count: p.count + 1 } : p
+          p._id === product._id
+            ? { ...p, count: p.count + existingProduct.count }
+            : p
         );
       } else {
         return [...prevCart, { ...product, count: 1 }];
