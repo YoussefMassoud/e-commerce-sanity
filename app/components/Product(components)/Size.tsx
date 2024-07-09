@@ -37,7 +37,7 @@ interface SizeProps {
 
 const Size = ({ size, setSize }: SizeProps) => {
   const sizes = ["S", "M", "L"];
-  const [activeSize, setActiveSize] = useState("");
+  const [activeSize, setActiveSize] = useState("S");
 
   const handleSizeClick = (size: string) => {
     switch (size) {
@@ -55,7 +55,7 @@ const Size = ({ size, setSize }: SizeProps) => {
       }
       default: {
         // Optionally, you can add a default case to handle unexpected values
-        console.warn("Unknown size:", size);
+        setSize("Small");
         break;
       }
     }
