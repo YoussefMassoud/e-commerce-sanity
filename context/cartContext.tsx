@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 interface CartContextType {
   cart: cartProduct[];
   addToCart: (product: cartProduct) => void;
-  removeFromCart: (productId: string) => void;
+  removeFromCart: (index: number) => void;
   updateProductCount: (productId: string, count: number) => void;
 }
 
@@ -16,23 +16,23 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const addToCart = (product: cartProduct) => {
     setCart((prevCart) => {
-      const existingProduct = prevCart.find((p) => p._id === product._id);
+      const existingProduct = prevCart.find(
+        (p) => p._id === product._id && p.size === product.size
+      );
       if (existingProduct) {
         return prevCart.map((p) =>
-          p._id === product._id
-            ? { ...p, count: p.count + existingProduct.count }
+          p._id === product._id && p.size === product.size
+            ? { ...p, count: p.count + product.count }
             : p
         );
       } else {
-        return [...prevCart, { ...product, count: 1 }];
+        return [...prevCart, { ...product, count: product.count }];
       }
     });
   };
 
-  const removeFromCart = (productId: string) => {
-    setCart((prevCart) =>
-      prevCart.filter((product) => product._id !== productId)
-    );
+  const removeFromCart = (index: number) => {
+    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
   };
 
   const updateProductCount = (productId: string, count: number) => {
