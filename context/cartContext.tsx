@@ -15,7 +15,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<cartProduct[]>([]);
 
   const addToCart = (product: cartProduct) => {
-    setCart((prevCart) => [...prevCart, product]);
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find((p) => p._id === product._id);
+      if (existingProduct) {
+        return prevCart.map((p) =>
+          p._id === product._id ? { ...p, count: p.count + 1 } : p
+        );
+      } else {
+        return [...prevCart, { ...product, count: 1 }];
+      }
+    });
   };
 
   const removeFromCart = (productId: string) => {

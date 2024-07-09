@@ -17,10 +17,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { urlFor } from "@/lib/sanity";
 import { Trash2 } from "lucide-react";
 import { toast } from "react-toastify"; // Import toast
-import "react-toastify/dist/ReactToastify.css"; 
+import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 
-async function sendTelegramMessage(formData: any, productName: string ,productPrice:number) {
+async function sendTelegramMessage(
+  formData: any,
+  productName: string,
+  productPrice: number
+) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
   const chat_id = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
   const message = `
@@ -58,7 +62,6 @@ export default function TelegramDialog({
   productName,
   productImage,
   productPrice,
-
 }: TelegramDialogProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -70,20 +73,21 @@ export default function TelegramDialog({
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (step === 1) {
-      if (!formData.name || !formData.phone || !formData.address) {
-        toast.error("Please fill in all required fields.");
-        return; 
-      }
-      setStep(2); 
-    } else {
-      const success = await sendTelegramMessage(formData, productName, productPrice);
-      if (success) {
-        setFormData({ name: "", phone: "", address: "" });
-        router.push("/success");
-        toast.success(" Your Order Request Done!");
 
-      }
+    if (!formData.name || !formData.phone || !formData.address) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    const success = await sendTelegramMessage(
+      formData,
+      productName,
+      productPrice
+    );
+    if (success) {
+      setFormData({ name: "", phone: "", address: "" });
+      router.push("/success");
+      toast.success(" Your Order Request Done!");
     }
   };
 
@@ -93,10 +97,6 @@ export default function TelegramDialog({
       ...prevFormData,
       [name]: value,
     }));
-  };
-
-  const handleBackToFirstStep = () => {
-    setStep(1); // Go back to the first step (basic details)
   };
 
   return (
@@ -144,51 +144,9 @@ export default function TelegramDialog({
               </div>
             </div>
           )}
-          {step === 2 && (
-            <div className="grid flex-col gap-4  py-10">
-              <Card>
-                <CardContent className="flex py-2 flex-col justify-start">
-                  <div className="flex flex-row justify-between items-center">
-                    <img
-                      src={urlFor(productImage[0]).url()}
-                      alt="productImage"
-                      className="max-w-20 max-h-24 min-w-20 "
-                    />
-                    <div className="flex flex-col px-2 ">
-                      <p className="text-lg py-2 font-semibold">{productName}</p>
-                      <p className="text-lg py-2 font-semibold">Size: M</p>
-                    </div>
-                    <div className="flex flex-col justify-end py-2 mt-4 items-end">
-                      <h1><p className="text-lg font-semibold"> EGP{productPrice}</p></h1>
-                      
-                      <div className="flex items-center space-x-2 mt-2">
-                       
-                        <div className="flex items-center py-2">
-                           <button className="text-red-500"><Trash2  /></button>
-                          <span className="px-2">1</span>
-                          <button className="px-2 py-1 border rounded">
-                            +
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-              <Link href={"/shop"}>
-              <div className="mt-4">
-                <button className="text-black font-semibold">+ Add other products</button>
-              </div>
-              </Link>
-            </div>
-          )}
+
           <DialogFooter>
-            {step === 2 && (
-              <Button type="button" onClick={handleBackToFirstStep}>
-                Back
-              </Button>
-            )}
-            <Button type="submit">{step === 1 ? "Next Step" : "Submit"}</Button>
+            <Button type="submit">{"Submit"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
