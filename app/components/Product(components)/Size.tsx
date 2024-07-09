@@ -37,7 +37,7 @@ interface SizeProps {
 
 const Size = ({ size, setSize }: SizeProps) => {
   const sizes = ["S", "M", "L"];
-  const [activeSize, setActiveSize] = useState("");
+  const [activeSize, setActiveSize] = useState("S");
 
   const handleSizeClick = (size: string) => {
     switch (size) {
