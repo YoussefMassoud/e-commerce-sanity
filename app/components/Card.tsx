@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { FilterState } from "../shop/page";
 import { sort } from "../(methods)/sort";
+import { filterMethod } from "../(methods)/filter";
 
 async function getData(): Promise<fullProduct[]> {
   const query = `*[_type == "product"][0...50] | order(_createdAt desc) {
@@ -44,11 +45,13 @@ export default function Card({
 }) {
   const [activeSort, setActiveSort] = useState("Recommended"); // State to track active sort option
   const [products, setProducts] = useState<fullProduct[]>([]);
+  const [defaultProduct, setDefaultProduct] = useState<fullProduct[]>([]);
   const [sortedProducts, setSortedProducts] = useState<fullProduct[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
+      setDefaultProduct(data);
       setProducts(data);
     }
     fetchData();
@@ -57,6 +60,11 @@ export default function Card({
   useEffect(() => {
     setSortedProducts(sort(products, activeSort));
   }, [activeSort]);
+
+  useEffect(() => {
+    setSortedProducts(filterMethod(products, filter, defaultProduct));
+    setProducts(filterMethod(products, filter, defaultProduct));
+  }, [filter]);
 
   // Function to handle sorting change
   const handleSortChange = (sortOption: string) => {
