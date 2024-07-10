@@ -5,20 +5,83 @@ import {
   Sheet,
   SheetContent,
   SheetDescription,
+  SheetFooter,
   SheetHeader,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useCart } from "@/context/cartContext";
-import { cartProduct } from "@/types/interface";
 import { Plus, ShoppingBag, Trash2 } from "lucide-react";
-import { useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { urlFor } from "@/lib/sanity";
 import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
+async function sendTelegramMessage(formData: any, cart: any[]) {
+  const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
+  const chat_id = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
+  const message = `
+    New Order Details:    
+    Name: ${formData.name}
+    Phone: ${formData.phone}
+    Address: ${formData.address}
+    Products: ${cart.map((item) => `${item.name} - ${item.price}`).join(", ")}
+  `;
+  const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
+
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      console.log("Message sent to Telegram successfully");
+      return true;
+    } else {
+      console.error("Failed to send message to Telegram");
+      return false;
+    }
+  } catch (error) {
+    console.error("Error sending message to Telegram:", error);
+    return false;
+  }
+}
+
 
 export default function CartProduct() {
   const { cart, updateProductCount, removeFromCart } = useCart();
-  const handleOpenChange = () => {};
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    address: "",
+  });
+  const router = useRouter();
+
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!formData.name || !formData.phone || !formData.address) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    const success = await sendTelegramMessage(formData, cart);
+    if (success) {
+      setFormData({ name: "", phone: "", address: "" });
+      router.push("/success");
+      toast.success(" Your Order Request Done!");
+    }
+  };
+
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   return (
     <>
@@ -38,10 +101,10 @@ export default function CartProduct() {
             </SheetHeader>
             <SheetDescription>From Allure_eg</SheetDescription>
           </div>
-
           <Card>
             <CardHeader className="flex justify-start gap-5   ">
-              Products
+              <div className="font-semibold">Products</div>
+
               {cart.length === 0 ? (
                 <div className="flex flex-col justify-center items-center  gap-4">
                   <ShoppingBag className="w-7 h-7" />
@@ -118,6 +181,61 @@ export default function CartProduct() {
               )}
             </CardHeader>
           </Card>
+          {/* Shipping Details */}
+          <form onSubmit={handleFormSubmit}>
+            <div className="py-6">
+              <Card>
+                <CardHeader className="flex justify-start gap-5">
+                  <div className="font-semibold">Ship to</div>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label className="text-right">Name</Label>
+                      <Input
+                        className="col-span-3"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        placeholder="Enter your name"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label className="text-right">Phone</Label>
+                      <Input
+                        type="number"
+                        className="col-span-3"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        placeholder="+201063647856"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label className="text-right">Address</Label>
+                      <Input
+                        className="col-span-3"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleInputChange}
+                        placeholder="Enter your address"
+                      />
+                    </div>
+                  </div>
+                </CardHeader>
+              </Card>
+            </div>
+            {/* Shipping Details end */}
+            <div className="flex justify-center">
+              {" "}
+              <SheetFooter>
+                <Button
+                  type="submit"
+                  className="flex justify-between items-center px-20"
+                >
+                  <div className="font-semibold text-base">Place Order</div>
+                </Button>
+              </SheetFooter>
+            </div>
+          </form>
         </SheetContent>
       </Sheet>
     </>
