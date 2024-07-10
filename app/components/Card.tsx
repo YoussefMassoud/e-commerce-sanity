@@ -2,9 +2,9 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import { act, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { client } from "@/lib/sanity";
-import { fullProduct, simplifiedProduct } from "../../types/interface";
+import { fullProduct } from "../../types/interface";
 import {
   DropdownMenu,
   DropdownMenuContent,

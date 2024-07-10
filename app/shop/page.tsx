@@ -1,18 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, {
-  useState,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Card from "../components/Card";
 import FilterMenu from "../components/FilterMenu";
 import Footer from "../components/Footer";
+import SkeletonLoading from "../components/SkeletonLoading";
 
 export interface FilterState {
   onSale: boolean;
@@ -42,6 +37,7 @@ export default function Shop() {
   });
 
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
+  const [loading, setLoading] = useState(true); // Add loading state
   const fromRef = useRef<HTMLInputElement>(null);
   const toRef = useRef<HTMLInputElement>(null);
 
@@ -85,6 +81,17 @@ export default function Shop() {
       document.body.style.overflow = "auto";
     };
   }, [isFilterMenuOpen]);
+
+  //  loading
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      // data fetch
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setLoading(false);
+    };
+    loadData();
+  }, []);
 
   return (
     <>
@@ -131,7 +138,7 @@ export default function Shop() {
                   <Checkbox
                     id="onSale"
                     checked={filter.onSale}
-                    onCheckedChange={(checked :boolean) =>
+                    onCheckedChange={(checked: boolean) =>
                       handleCheckboxChange("onSale", checked)
                     }
                   />
@@ -148,7 +155,7 @@ export default function Shop() {
                   <Checkbox
                     id="size-large"
                     checked={filter.sizes.large}
-                    onCheckedChange={(checked :boolean) =>
+                    onCheckedChange={(checked: boolean) =>
                       handleCheckboxChange("size-large", checked)
                     }
                   />
@@ -160,7 +167,7 @@ export default function Shop() {
                   <Checkbox
                     id="size-medium"
                     checked={filter.sizes.medium}
-                    onCheckedChange={(checked :boolean) =>
+                    onCheckedChange={(checked: boolean) =>
                       handleCheckboxChange("size-medium", checked)
                     }
                   />
@@ -172,7 +179,7 @@ export default function Shop() {
                   <Checkbox
                     id="size-small"
                     checked={filter.sizes.small}
-                    onCheckedChange={(checked :boolean) =>
+                    onCheckedChange={(checked: boolean) =>
                       handleCheckboxChange("size-small", checked)
                     }
                   />
@@ -210,8 +217,15 @@ export default function Shop() {
               </div>
             </div>
           </div>
+
           {/** The cards div */}
-          <Card className="lg:col-span-3 col-span-4" filter={filter} />
+          <div className="lg:col-span-3 mt-6 col-span-4">
+            {loading ? (
+              <SkeletonLoading />
+            ) : (
+              <Card className="lg:col-span-3 col-span-4" filter={filter} />
+            )}
+          </div>
         </div>
       </div>
       <Footer />
