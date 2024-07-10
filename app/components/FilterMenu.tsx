@@ -44,7 +44,7 @@ const FilterMenu: React.FC<Props> = ({
               <Checkbox
                 id="onSale"
                 checked={filter.onSale}
-                onCheckedChange={(checked) =>
+                onCheckedChange={(checked: boolean) =>
                   onCheckboxChange("onSale", checked)
                 }
               />
@@ -61,21 +61,20 @@ const FilterMenu: React.FC<Props> = ({
               <Checkbox
                 id="size-large"
                 checked={filter.sizes.large}
-                onCheckedChange={(checked) => {
-                  console.log("🚀 ~ Shop ~ checked:", checked);
-
-                  onCheckboxChange("size-large", checked);
-                }}
+                onCheckedChange={(checked: boolean) =>
+                  onCheckboxChange("size-large", checked)
+                }
               />
               <Label htmlFor="size-large" className="text-gray-400 px-2">
                 Large
               </Label>
             </div>
+
             <div className="flex items-center space-x-2 mt-3">
               <Checkbox
                 id="size-medium"
                 checked={filter.sizes.medium}
-                onCheckedChange={(checked) =>
+                onCheckedChange={(checked: boolean) =>
                   onCheckboxChange("size-medium", checked)
                 }
               />
@@ -87,7 +86,7 @@ const FilterMenu: React.FC<Props> = ({
               <Checkbox
                 id="size-small"
                 checked={filter.sizes.small}
-                onCheckedChange={(checked) =>
+                onCheckedChange={(checked: boolean) =>
                   onCheckboxChange("size-small", checked)
                 }
               />
