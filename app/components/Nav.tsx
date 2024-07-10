@@ -52,7 +52,7 @@ export default function Nav() {
             <div>
             <div className="input-wrapper">
                   <button className="icon"> 
-                   <Search  className="h-5 w-5 text-white" />
+                   <Search  className="h-5 w-5 text-black" />
                   </button>
                   <input placeholder=" Search.." className="input" name="text" type="text" />
                 </div>            
