@@ -50,16 +50,19 @@ export default function Nav() {
             </div>
             {/* Search start */}
             <div>
-            <div className="input-wrapper">
-                  <button className="icon"> 
-                   <Search  className="h-5 w-5 text-black" />
-                  </button>
-                  <input placeholder=" Search.." className="input" name="text" type="text" />
-                </div>            
-                </div>
+              <div className="input-wrapper">
+                <button className="icon">
+                  <Search className="h-5 w-5 text-black" />
+                </button>
+                <input
+                  placeholder=" Search.."
+                  className="input"
+                  name="text"
+                  type="text"
+                />
+              </div>
+            </div>
             {/* Search start */}
-
-            <h1 className="text-[15px] font-semibold">عربي</h1>
           </div>
         </div>
       </div>
