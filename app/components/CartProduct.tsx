@@ -93,7 +93,7 @@ export default function CartProduct() {
             </h1>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-fit lg:w-[100000px]  ">
+        <SheetContent side="right" className="w-fit lg:w-[100000px] overflow-y-auto ">
           <div className="pb-10">
             <SheetHeader className="font-bold text-xl">
               Your shopping bag
