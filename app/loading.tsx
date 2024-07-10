@@ -1,11 +1,11 @@
 import React from "react";
-// import CleopatraLoading from "./(components)/CleopatraLoading";
+ import MainLoading from "./components/MainLoading";
 import SkeletonLoading from "./components/SkeletonLoading";
 
 const Loading = () => {
   return (
     <>
-      {/* <CleopatraLoading /> */}
+       <MainLoading /> 
       <SkeletonLoading />
     </>
   );
