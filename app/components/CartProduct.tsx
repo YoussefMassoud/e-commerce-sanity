@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import { findIndex } from "sanity";
 
 async function sendTelegramMessage(formData: any, cart: any[]) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
@@ -48,7 +49,6 @@ async function sendTelegramMessage(formData: any, cart: any[]) {
   }
 }
 
-
 export default function CartProduct() {
   const { cart, updateProductCount, removeFromCart } = useCart();
   const [formData, setFormData] = useState({
@@ -73,7 +73,6 @@ export default function CartProduct() {
       toast.success(" Your Order Request Done!");
     }
   };
-
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -148,11 +147,21 @@ export default function CartProduct() {
                             <div className="flex items-center space-x-2 mt-2">
                               <div className="flex items-center py-2">
                                 <button
-                                  onClick={() => removeFromCart(item._id)}
+                                  onClick={() => {
+                                    const index = cart.findIndex(
+                                      (product) =>
+                                        product._id === item._id &&
+                                        product.size === item.size
+                                    );
+                                    if (index !== -1) {
+                                      removeFromCart(index);
+                                    }
+                                  }}
                                   className="text-red-500"
                                 >
                                   <Trash2 />
                                 </button>
+
                                 <span className="px-2">{item.count}</span>
                                 <button
                                   onClick={() =>
