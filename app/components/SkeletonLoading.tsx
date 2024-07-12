@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 const SkeletonLoading = () => {
   return (
-    <div className="grid grid-cols-2 gap-6 lg:grid-cols-3">
+    <div className="grid grid-cols-2 gap-6 lg:mt-16 mt-6 lg:grid-cols-3">
       {[...Array(6)].map((_, index) => (
         <div key={index} className="flex flex-col space-y-3">
           <div className="relative ">

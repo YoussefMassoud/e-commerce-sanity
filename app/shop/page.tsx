@@ -219,7 +219,7 @@ export default function Shop() {
           </div>
 
           {/** The cards div */}
-          <div className="lg:col-span-3 mt-6 col-span-4">
+          <div className="lg:col-span-3 lg:-mt-16 mt-6 col-span-4">
             {loading ? (
               <SkeletonLoading />
             ) : (
