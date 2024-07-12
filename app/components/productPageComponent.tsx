@@ -103,7 +103,7 @@ const ProductPageComponent = ({ data }: { data: fullProduct }) => {
               </div>
 
               <div className="mt-4 mb-6 justify-center flex items-center gap-2    border-t  border-gray-400 ">
-                <span className="text-md justify-between w-full px-20 py-4 flex text-gray-600">
+                <span className="text-md justify-between w-full lg:px-20 px-2 py-4 flex text-gray-600">
                   <span className="flex justify-center mt-5">
                     <Truck className="w-6 h-6 " />
                   </span>
@@ -117,7 +117,7 @@ const ProductPageComponent = ({ data }: { data: fullProduct }) => {
               </div>
 
               <div className=" mb-6 flex justify-center items-center gap-2 border-b   border-t  border-gray-400 ">
-                <span className="text-md w-full justify-between items-center px-20 flex text-gray-600 py-5">
+                <span className="text-md w-full justify-between items-center px-3 lg:px-20 flex text-gray-600 py-5">
                   <span className="flex">
                     <Landmark className="w-6 h-6 " />
                   </span>
