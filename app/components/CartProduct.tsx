@@ -26,11 +26,12 @@ async function sendTelegramMessage(formData: any, cart: any[]) {
   const token = process.env.NEXT_PUBLIC_TELEGRAM_BOT_TOKEN;
   const chat_id = process.env.NEXT_PUBLIC_TELEGRAM_CHAT_ID;
   const message = `
-    New Order Details:    
+    New Order Details:🛵    
     Name: ${formData.name}
     Phone: ${formData.phone}
     Address: ${formData.address}
-    Products: ${cart.map((item) => `${item.name} - ${item.price}`).join(", ")}
+     Products: 
+  ${cart.map((item, index) => `${index + 1}. ${item.name} - ${item.price}`).join("\n")}
   `;
   const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
 
@@ -93,7 +94,10 @@ export default function CartProduct() {
             </h1>
           </Button>
         </SheetTrigger>
-        <SheetContent side="right" className="w-fit lg:w-[100000px] overflow-y-auto ">
+        <SheetContent
+          side="right"
+          className="w-fit lg:w-[100000px] overflow-y-auto "
+        >
           <div className="pb-10">
             <SheetHeader className="font-bold text-xl">
               Your shopping bag
