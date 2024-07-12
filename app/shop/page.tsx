@@ -83,15 +83,15 @@ export default function Shop() {
   return (
     <>
       <div className="">
-        <div className="flex lg:mt-20 mt-8 flex-col justify-start gap-1 lg:px-12 px-4">
-          <div className="flex justify-between">
+        <div className="flex sm:px-12  lg:mt-20 mt-8 flex-col justify-start gap-1 lg:px-12 px-4">
+          <div className="flex justify-between ">
             <div className="flex flex-row gap-2">
               Home
               <p className="text-gray-400">/</p>
             </div>
             {/** The filter button */}
             <button
-              className="flex items-center gap-2 lg:hidden"
+              className="flex items-center gap-2 sm:px-4   lg:hidden"
               onClick={toggleFilterMenu}
             >
               Filter by
@@ -115,7 +115,7 @@ export default function Shop() {
           />
 
           {/** The desktop filter menu */}
-          <div className="hidden lg:flex lg:col-span-1 flex-col lg:px-12 px-4 mt-8 lg:mt-0">
+          <div className="hidden sm:hidden lg:flex lg:col-span-1 flex-col lg:px-12 px-4 mt-8 lg:mt-0">
             <div className="border-t flex flex-col justify-start mt-4 border-gray-200">
               <h1 className="text-lg font-bold mt-4">Filter by</h1>
               {/* Discounts section */}
@@ -206,7 +206,7 @@ export default function Shop() {
           </div>
 
           {/** The cards div */}
-          <div className="lg:col-span-3 lg:-mt-16 mt-6 col-span-4">
+          <div className="lg:col-span-3 lg:-mt-16 mt-6 sm:mt-0 col-span-4">
             <Card className="lg:col-span-3 col-span-4" filter={filter} />
           </div>
         </div>
