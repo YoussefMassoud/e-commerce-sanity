@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import Card from "../components/Card";
 import FilterMenu from "../components/FilterMenu";
 import Footer from "../components/Footer";
-import SkeletonLoading from "../components/SkeletonLoading";
 
 export interface FilterState {
   onSale: boolean;
@@ -37,7 +36,6 @@ export default function Shop() {
   });
 
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState(false);
-  const [loading, setLoading] = useState(true); // Add loading state
   const fromRef = useRef<HTMLInputElement>(null);
   const toRef = useRef<HTMLInputElement>(null);
 
@@ -81,17 +79,6 @@ export default function Shop() {
       document.body.style.overflow = "auto";
     };
   }, [isFilterMenuOpen]);
-
-  //  loading
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      // data fetch
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setLoading(false);
-    };
-    loadData();
-  }, []);
 
   return (
     <>
@@ -220,11 +207,7 @@ export default function Shop() {
 
           {/** The cards div */}
           <div className="lg:col-span-3 lg:-mt-16 mt-6 col-span-4">
-            {loading ? (
-              <SkeletonLoading />
-            ) : (
-              <Card className="lg:col-span-3 col-span-4" filter={filter} />
-            )}
+            <Card className="lg:col-span-3 col-span-4" filter={filter} />
           </div>
         </div>
       </div>

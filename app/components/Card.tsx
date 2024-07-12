@@ -2,7 +2,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { client } from "@/lib/sanity";
 import { fullProduct } from "../../types/interface";
 import {
@@ -14,6 +14,7 @@ import {
 import { FilterState } from "../shop/page";
 import { sort } from "../(methods)/sort";
 import { filterMethod } from "../(methods)/filter";
+import SkeletonLoading from "./SkeletonLoading";
 
 async function getData(): Promise<fullProduct[]> {
   const query = `*[_type == "product"][0...50] | order(_createdAt desc) {
@@ -47,6 +48,7 @@ export default function Card({
   const [products, setProducts] = useState<fullProduct[]>([]);
   const [defaultProduct, setDefaultProduct] = useState<fullProduct[]>([]);
   const [sortedProducts, setSortedProducts] = useState<fullProduct[]>([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     async function fetchData() {
@@ -62,14 +64,26 @@ export default function Card({
   }, [activeSort]);
 
   useEffect(() => {
-    setSortedProducts(filterMethod(products, filter, defaultProduct));
-    setProducts(filterMethod(products, filter, defaultProduct));
+    const filteredProducts = filterMethod(products, filter, defaultProduct);
+    setSortedProducts(filteredProducts);
+    setProducts(filteredProducts);
   }, [filter]);
 
   // Function to handle sorting change
   const handleSortChange = (sortOption: string) => {
     setActiveSort(sortOption);
   };
+
+  // loading
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      // data fetch
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setLoading(false);
+    };
+    loadData();
+  }, []);
 
   return (
     <div className={`${className}`}>
@@ -114,52 +128,58 @@ export default function Card({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {products.map((product) => (
-            <div key={product._id} className="group relative">
-              <div className="aspect-square w-full overflow-hidden rounded-md bg-2 group-hover:opacity-75 lg:h-80">
-                <Link href={`/product/${product.slug}`} legacyBehavior>
-                  <img
-                    src={product.imageUrl}
-                    alt="Product image"
-                    className="w-full h-full object-cover object-center lg:h-full lg:w-full"
-                    width={300}
-                    height={300}
-                    loading="lazy"
-                  />
-                </Link>
-              </div>
-              <div className="mt-4 flex justify-between flex-col text-m font-bold text-gray-600">
-                <Link href={`/product/${product.slug}`} legacyBehavior>
-                  {product.name}
-                </Link>
-                <h1 className="text-black font-normal text-[14px]">3 sizes</h1>
-                {!product.sale?.on ? (
-                  <h1 className="text-black font-normal text-[14px] ">
-                    EGP{" "}
-                    <span className="font-semibold text-[16px]">
-                      {product.price}
-                    </span>
+        <div className="mt-6 lg:col-span-3 col-span-4 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+          {loading ? (
+            <SkeletonLoading />
+          ) : (
+            products.map((product) => (
+              <div key={product._id} className="group relative">
+                <div className="aspect-square w-full overflow-hidden rounded-md bg-2 group-hover:opacity-75 lg:h-80">
+                  <Link href={`/product/${product.slug}`} legacyBehavior>
+                    <img
+                      src={product.imageUrl}
+                      alt="Product image"
+                      className="w-full h-full object-cover object-center lg:h-full lg:w-full"
+                      width={300}
+                      height={300}
+                      loading="lazy"
+                    />
+                  </Link>
+                </div>
+                <div className="mt-4 flex justify-between flex-col text-m font-bold text-gray-600">
+                  <Link href={`/product/${product.slug}`} legacyBehavior>
+                    {product.name}
+                  </Link>
+                  <h1 className="text-black font-normal text-[14px]">
+                    3 sizes
                   </h1>
-                ) : (
-                  <>
+                  {!product.sale?.on ? (
                     <h1 className="text-black font-normal text-[14px] ">
                       EGP{" "}
                       <span className="font-semibold text-[16px]">
-                        {product.sale.to}
+                        {product.price}
                       </span>
                     </h1>
-                    <h1 className="text-[14px] font-normal text-black">
-                      <span className="text-gray-400 line-through">
-                        EGP {product.sale.from}
-                      </span>{" "}
-                      -{product.sale.saved}%
-                    </h1>
-                  </>
-                )}
+                  ) : (
+                    <>
+                      <h1 className="text-black font-normal text-[14px] ">
+                        EGP{" "}
+                        <span className="font-semibold text-[16px]">
+                          {product.sale.to}
+                        </span>
+                      </h1>
+                      <h1 className="text-[14px] font-normal text-black">
+                        <span className="text-gray-400 line-through">
+                          EGP {product.sale.from}
+                        </span>{" "}
+                        -{product.sale.saved}%
+                      </h1>
+                    </>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </div>
