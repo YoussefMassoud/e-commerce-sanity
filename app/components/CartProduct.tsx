@@ -31,7 +31,7 @@ async function sendTelegramMessage(formData: any, cart: any[]) {
     Phone: ${formData.phone}
     Address: ${formData.address}
      Products: 
-  ${cart.map((item, index) => `${index + 1}. ${item.name} - ${item.price}`).join("\n")}
+  ${cart.map((item, index) => `${index + 1}. Name : ${item.name} - Price : ${item.price}`).join("\n")}
   `;
   const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}`;
 
