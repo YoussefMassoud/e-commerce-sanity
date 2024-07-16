@@ -30,8 +30,8 @@ export default function Nav() {
     <div className="flex flex-col z-50 lg:px-[40px] px-[24px] relative">
       <div className="border-b-2 border-gray-200 z-50">
         <div className="flex w-full justify-between text-xl py-2">
-          <div className="flex gap-3 w-full">
-            <img src="/instagram.svg" alt="insta" className="w-4" />
+          <div className="lg:flex  lg:gap-3 lg:w-full hidden sm:hidden  ">
+            <img src="/instagram.svg" alt="insta" className="w-4 " />
             <img className="w-4" src="/phone.svg" alt="insta" />
           </div>
 
@@ -40,7 +40,7 @@ export default function Nav() {
               src="/Logo.svg"
               width={"100px"}
               height={"100px"}
-              className="lg:!w-[100px] w-[100px]"
+              className="lg:w-[100px]  sm:w-[80px] w-[55px] "
               alt="Logo"
             />
           </Link>
