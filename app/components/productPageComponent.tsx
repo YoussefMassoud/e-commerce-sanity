@@ -83,23 +83,27 @@ const ProductPageComponent = ({ data }: { data: fullProduct }) => {
                 </div>
               </div>
 
-              <div className="py-2 flex flex-row space-x-8 ">
-                <Input
-                  type="number"
-                  typeof="number"
-                  placeholder="1"
-                  value={count}
-                  className="max-w-20"
-                  onChange={(e) => handleCountChange(e)}
-                />
-                <MessageTelegram
-                  productName={data.name}
-                  productImage={data.images}
-                  productPrice={data.price}
-                />
-                <Button onClick={handleAddToBagClick} className="">
-                  Add to shopping bag
-                </Button>
+              <div className="py-2 grid lg:flex lg:flex-row lg:space-x-8 lg:grid-cols-2">
+                <div className="flex space-x-2 items-center mb-2 lg:mb-0">
+                  <Input
+                    type="number"
+                    typeof="number"
+                    placeholder="1"
+                    value={count}
+                    className="max-w-20 border-2 border-black"
+                    onChange={(e) => handleCountChange(e)}
+                  />
+                  <MessageTelegram
+                    productName={data.name}
+                    productImage={data.images}
+                    productPrice={data.price}
+                  />
+                </div>
+                <div className="w-full">
+                  <Button onClick={handleAddToBagClick} className="w-full">
+                    Add to shopping bag
+                  </Button>
+                </div>
               </div>
 
               <div className="mt-4 mb-6 justify-center flex items-center gap-2    border-t  border-gray-400 ">

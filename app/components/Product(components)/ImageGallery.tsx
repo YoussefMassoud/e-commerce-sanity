@@ -52,7 +52,8 @@ export default function ImageGallery({ images }: iAppProps) {
           alt="Photo"
           width={500}
           height={500}
-          className="max-h-[620px] w-full object-cover object-center"
+          className="lg:max-h-[620px] 
+          max-h-[500px] max-w-[350px] object-cover object-center"
           loading="lazy"
         />
 
