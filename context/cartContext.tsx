@@ -38,7 +38,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const updateProductCount = (index: number, count: number) => {
     setCart((prevCart) =>
       prevCart.map((product , i) =>
-        i !== index ? { ...product, count } : product
+        i === index ? { ...product, count } : product
       )
     );
   };

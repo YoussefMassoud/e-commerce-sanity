@@ -16,7 +16,7 @@ import { urlFor } from "@/lib/sanity";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
@@ -170,16 +170,19 @@ export default function CartProduct({
                               <div className="flex items-center py-2">
                                 <button
                                   onClick={() => {
-                                    const index = cart.findIndex(
+                                    const itemIndex = cart.findIndex(
                                       (product) =>
                                         product._id === item._id &&
                                         product.size === item.size
                                     );
-                                    if (index !== -1) {
+                                    if (itemIndex !== -1) {
                                       if (item.count > 1) {
-                                        updateProductCount(index, --item.count);
+                                        updateProductCount(
+                                          itemIndex,
+                                          --item.count
+                                        );
                                       } else {
-                                        removeFromCart(index);
+                                        removeFromCart(itemIndex);
                                       }
                                     }
                                   }}
