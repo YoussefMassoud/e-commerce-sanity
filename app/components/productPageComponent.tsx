@@ -83,7 +83,7 @@ const ProductPageComponent = ({ data }: { data: fullProduct }) => {
                 </div>
               </div>
 
-              <div className="py-2 grid lg:flex lg:flex-row lg:space-x-8 lg:grid-cols-2">
+              <div className="py-2 grid lg:flex lg:flex-row lg:space-x-3 lg:grid-cols-2">
                 <div className="flex space-x-2 items-center mb-2 lg:mb-0">
                   <Input
                     type="number"
@@ -99,7 +99,7 @@ const ProductPageComponent = ({ data }: { data: fullProduct }) => {
                     productPrice={data.price}
                   />
                 </div>
-                <div className="w-full">
+                <div className="lg:w-auto w-full">
                   <Button onClick={handleAddToBagClick} className="w-full">
                     Add to shopping bag
                   </Button>
