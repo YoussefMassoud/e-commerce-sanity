@@ -16,7 +16,7 @@ import { urlFor } from "@/lib/sanity";
 import Link from "next/link";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
@@ -50,7 +50,15 @@ async function sendTelegramMessage(formData: any, cart: any[]) {
   }
 }
 
-export default function CartProduct() {
+interface cartProductProps {
+  cartOpen: boolean;
+  setCartOpen: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function CartProduct({
+  cartOpen,
+  setCartOpen,
+}: cartProductProps) {
   const { cart, updateProductCount, removeFromCart } = useCart();
   const [formData, setFormData] = useState({
     name: "",
@@ -85,9 +93,14 @@ export default function CartProduct() {
 
   return (
     <>
-      <Sheet>
+      <Sheet open={cartOpen} onOpenChange={setCartOpen}>
         <SheetTrigger asChild>
-          <Button className="space-x-4 rounded-lg">
+          <Button
+            onClick={() => {
+              setCartOpen(false);
+            }}
+            className="space-x-4 rounded-lg"
+          >
             <ShoppingBag className="w-5 h-5" />
             <h1 className="text-white text-[14px] font-normal">
               {cart.length}
@@ -116,7 +129,12 @@ export default function CartProduct() {
                   </h1>
                   <div className=" flex justify-center">
                     <Link href={"/shop"}>
-                      <Button className="">
+                      <Button
+                        onClick={() => {
+                          setCartOpen(false);
+                        }}
+                        className=""
+                      >
                         <Plus /> Add Product
                       </Button>
                     </Link>
@@ -134,16 +152,16 @@ export default function CartProduct() {
                             className="max-w-20 object-cover max-h-24 min-w-20"
                           />
                           <div className="flex flex-col px-2">
-                            <p className="text-lg py-2 font-semibold">
+                            <p className="lg:text-lg text-sm py-2 lg:font-semibold">
                               {item.name}
                             </p>
-                            <p className="text-lg py-2 font-semibold">
+                            <p className="lg:text-lg  text-sm lg:font-semibold">
                               Size: {item.size}
                             </p>
                           </div>
                           <div className="flex flex-col justify-end py-2 mt-4 items-end">
                             <h1>
-                              <p className="text-lg font-semibold">
+                              <p className="text-sm font-semibold">
                                 EGP{item.price}
                               </p>
                             </h1>
@@ -158,19 +176,34 @@ export default function CartProduct() {
                                         product.size === item.size
                                     );
                                     if (index !== -1) {
-                                      removeFromCart(index);
+                                      if (item.count > 1) {
+                                        updateProductCount(index, --item.count);
+                                      } else {
+                                        removeFromCart(index);
+                                      }
                                     }
                                   }}
-                                  className="text-red-500"
+                                  className={
+                                    item.count <= 1
+                                      ? `text-red-500`
+                                      : "text-black"
+                                  }
                                 >
-                                  <Trash2 />
+                                  {item.count <= 1 ? <Trash2 /> : "-"}
                                 </button>
 
                                 <span className="px-2">{item.count}</span>
                                 <button
-                                  onClick={() =>
-                                    updateProductCount(item._id, ++item.count)
-                                  }
+                                  onClick={() => {
+                                    const index = cart.findIndex(
+                                      (product) =>
+                                        product._id === item._id &&
+                                        product.size === item.size
+                                    );
+                                    if (index !== -1) {
+                                      updateProductCount(index, ++item.count);
+                                    }
+                                  }}
                                   className="px-2 py-1 border rounded"
                                 >
                                   +
@@ -185,7 +218,12 @@ export default function CartProduct() {
 
                   <Link href={"/shop"}>
                     <div className="mt-4">
-                      <button className="text-black font-semibold">
+                      <button
+                        onClick={() => {
+                          setCartOpen(false);
+                        }}
+                        className="text-black font-semibold"
+                      >
                         + Add other products
                       </button>
                     </div>

@@ -6,7 +6,7 @@ interface CartContextType {
   cart: cartProduct[];
   addToCart: (product: cartProduct) => void;
   removeFromCart: (index: number) => void;
-  updateProductCount: (productId: string, count: number) => void;
+  updateProductCount: (index: number, count: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -35,10 +35,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCart((prevCart) => prevCart.filter((_, i) => i !== index));
   };
 
-  const updateProductCount = (productId: string, count: number) => {
+  const updateProductCount = (index: number, count: number) => {
     setCart((prevCart) =>
-      prevCart.map((product) =>
-        product._id === productId ? { ...product, count } : product
+      prevCart.map((product , i) =>
+        i !== index ? { ...product, count } : product
       )
     );
   };

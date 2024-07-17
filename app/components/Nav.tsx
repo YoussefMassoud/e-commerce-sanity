@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import CartProduct from "./CartProduct";
 import { useCart } from "@/context/cartContext";
 import { Search } from "lucide-react";
+import { useState } from "react";
 
 const links = [
   {
@@ -25,6 +26,7 @@ const links = [
 
 export default function Nav() {
   const pathname = usePathname();
+  const [cartOpen, setCartOpen] = useState(false);
 
   return (
     <div className="flex flex-col z-50 lg:px-[40px] px-[24px] relative">
@@ -46,7 +48,7 @@ export default function Nav() {
           </Link>
           <div className="flex w-full justify-end gap-5 items-center">
             <div className="flex items-center px-2">
-              <CartProduct />
+              <CartProduct cartOpen={cartOpen} setCartOpen={setCartOpen} />
             </div>
             {/* Search start */}
             <div>
