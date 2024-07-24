@@ -41,7 +41,7 @@ export default function Hero() {
         <img
           src={urlFor(data.image1).url()}
           alt="Background"
-          className="h-full w-full object-cover object-center"
+          className="lg:h-full lg:w-full sm:w-fit sm:h-full w-fit h-full  object-cover object-center"
         />
       </div>
       <div className="absolute inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
