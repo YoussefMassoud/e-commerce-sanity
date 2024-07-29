@@ -17,6 +17,8 @@ import { filterMethod } from "../(methods)/filter";
 import SkeletonLoading from "./SkeletonLoading";
 import { useSearch } from "@/context/searchContext";
 import { searchMethod } from "../(methods)/search";
+import SortMenu from "./SortMenu";
+import SmallCard from "./SmallCard";
 
 async function getData(): Promise<fullProduct[]> {
   const query = `*[_type == "product"][0...50] | order(_createdAt desc) {
@@ -56,13 +58,30 @@ export default function Card({
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
+      console.log("🚀 ~ fetchData ~ data:", data);
       setDefaultProduct(data);
       setProducts(data);
-    }
-    setLoading(true);
 
+      // Preload images
+      const imagePromises = data.map((product) => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = product.imageUrl;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      });
+
+      await Promise.all(imagePromises);
+
+      // Wait for 1 second before setting loading to false
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+
+    setLoading(true);
     fetchData();
-    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -90,93 +109,17 @@ export default function Card({
         {/* Round Products Section */}
         <div className="flex justify-between items-center">
           <h6 className="tracking-tight">{products.length} Product</h6>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center text-[">
-              Sort by: {activeSort}{" "}
-              <img src="/arrow.svg" alt="arrow" className="w-3" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem
-                onClick={() => handleSortChange("Recommended")}
-                className={activeSort === "Recommended" ? "bg-gray-200" : ""}
-              >
-                Recommended
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleSortChange("Newest")}
-                className={activeSort === "Newest" ? "bg-gray-200" : ""}
-              >
-                Newest
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleSortChange("Price, low to high")}
-                className={
-                  activeSort === "Price, low to high" ? "bg-gray-200" : ""
-                }
-              >
-                Price, low to high
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => handleSortChange("Price, high to low")}
-                className={
-                  activeSort === "Price, high to low" ? "bg-gray-200" : ""
-                }
-              >
-                Price, high to low
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <SortMenu
+            activeSort={activeSort}
+            handleSortChange={handleSortChange}
+          />
         </div>
         <div className="mt-6 lg:col-span-3 col-span-4 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {loading ? (
+          {loading || products.length === 0 ? (
             <SkeletonLoading />
           ) : (
             products.map((product) => (
-              <div key={product._id} className="group relative">
-                <div className="aspect-square w-full overflow-hidden rounded-md bg-2 group-hover:opacity-75 lg:h-80">
-                  <Link href={`/product/${product.slug}`} legacyBehavior>
-                    <img
-                      src={product.imageUrl}
-                      alt="Product image"
-                      className="w-full h-full object-cover object-center lg:h-full lg:w-full"
-                      width={300}
-                      height={300}
-                      loading="lazy"
-                    />
-                  </Link>
-                </div>
-                <div className="mt-4 flex justify-between flex-col text-m font-bold text-gray-600">
-                  <Link href={`/product/${product.slug}`} legacyBehavior>
-                    {product.name}
-                  </Link>
-                  <h1 className="text-black font-normal text-[14px]">
-                    3 sizes
-                  </h1>
-                  {!product.sale?.on ? (
-                    <h1 className="text-black font-normal text-[14px] ">
-                      EGP{" "}
-                      <span className="font-semibold text-[16px]">
-                        {product.price}
-                      </span>
-                    </h1>
-                  ) : (
-                    <>
-                      <h1 className="text-black font-normal text-[14px] ">
-                        EGP{" "}
-                        <span className="font-semibold text-[16px]">
-                          {product.sale.to}
-                        </span>
-                      </h1>
-                      <h1 className="text-[14px] font-normal text-black">
-                        <span className="text-gray-400 line-through">
-                          EGP {product.sale.from}
-                        </span>{" "}
-                        -{product.sale.saved}%
-                      </h1>
-                    </>
-                  )}
-                </div>
-              </div>
+              <SmallCard key={product._id} product={product} />
             ))
           )}
         </div>
