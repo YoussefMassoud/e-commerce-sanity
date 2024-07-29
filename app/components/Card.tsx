@@ -15,6 +15,8 @@ import { FilterState } from "../shop/page";
 import { sort } from "../(methods)/sort";
 import { filterMethod } from "../(methods)/filter";
 import SkeletonLoading from "./SkeletonLoading";
+import { useSearch } from "@/context/searchContext";
+import { searchMethod } from "../(methods)/search";
 
 async function getData(): Promise<fullProduct[]> {
   const query = `*[_type == "product"][0...50] | order(_createdAt desc) {
@@ -49,6 +51,7 @@ export default function Card({
   const [defaultProduct, setDefaultProduct] = useState<fullProduct[]>([]);
   const [sortedProducts, setSortedProducts] = useState<fullProduct[]>([]);
   const [loading, setLoading] = useState(true); // Add loading state
+  const { search } = useSearch();
 
   useEffect(() => {
     async function fetchData() {
@@ -68,6 +71,11 @@ export default function Card({
     setSortedProducts(filteredProducts);
     setProducts(filteredProducts);
   }, [filter]);
+
+  // The Search method useEffect
+  useEffect(() => {
+    searchMethod(defaultProduct, setProducts, search);
+  }, [search]);
 
   // Function to handle sorting change
   const handleSortChange = (sortOption: string) => {

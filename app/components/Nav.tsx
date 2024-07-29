@@ -7,7 +7,8 @@ import { usePathname } from "next/navigation";
 import CartProduct from "./CartProduct";
 import { useCart } from "@/context/cartContext";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearch } from "@/context/searchContext";
 
 const links = [
   {
@@ -27,6 +28,7 @@ const links = [
 export default function Nav() {
   const pathname = usePathname();
   const [cartOpen, setCartOpen] = useState(false);
+  const { setSearch } = useSearch();
 
   return (
     <div className="flex flex-col z-50 lg:px-[40px] px-[24px] relative">
@@ -52,7 +54,7 @@ export default function Nav() {
             </div>
             {/* Search start */}
             <div>
-              <div className="input-wrapper">
+              <div className="input-wrapper ">
                 <button className="icon">
                   <Search className="h-5 w-5 text-black" />
                 </button>
@@ -61,6 +63,7 @@ export default function Nav() {
                   className="input"
                   name="text"
                   type="text"
+                  onChange={(val) => setSearch(val.currentTarget.value)}
                 />
               </div>
             </div>

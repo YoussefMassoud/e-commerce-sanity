@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Nav";
 import { CartProvider } from "@/context/cartContext";
 import { ToastContainer } from "react-toastify";
+import { SearchContextProvider } from "@/context/searchContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <ToastContainer />
+        <ToastContainer />
         <CartProvider>
-          <Navbar />
-          {children}
+          <SearchContextProvider>
+            <Navbar />
+            {children}
+          </SearchContextProvider>
         </CartProvider>
       </body>
     </html>
