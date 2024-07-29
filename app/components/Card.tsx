@@ -49,17 +49,20 @@ export default function Card({
   const [activeSort, setActiveSort] = useState("Recommended"); // State to track active sort option
   const [products, setProducts] = useState<fullProduct[]>([]);
   const [defaultProduct, setDefaultProduct] = useState<fullProduct[]>([]);
-  const [sortedProducts, setSortedProducts] = useState<fullProduct[]>([]);
   const [loading, setLoading] = useState(true); // Add loading state
   const { search } = useSearch();
 
+  //
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
       setDefaultProduct(data);
       setProducts(data);
     }
+    setLoading(true);
+
     fetchData();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -68,7 +71,6 @@ export default function Card({
 
   useEffect(() => {
     const filteredProducts = filterMethod(products, filter, defaultProduct);
-    setSortedProducts(filteredProducts);
     setProducts(filteredProducts);
   }, [filter]);
 
@@ -81,17 +83,6 @@ export default function Card({
   const handleSortChange = (sortOption: string) => {
     setActiveSort(sortOption);
   };
-
-  // loading
-  useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      // data fetch
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setLoading(false);
-    };
-    loadData();
-  }, []);
 
   return (
     <div className={`${className}`}>
