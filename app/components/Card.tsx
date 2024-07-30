@@ -58,7 +58,6 @@ export default function Card({
   useEffect(() => {
     async function fetchData() {
       const data = await getData();
-      console.log("🚀 ~ fetchData ~ data:", data);
       setDefaultProduct(data);
       setProducts(data);
 
