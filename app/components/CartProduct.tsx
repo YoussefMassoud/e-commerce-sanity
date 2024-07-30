@@ -80,6 +80,7 @@ export default function CartProduct({
       setFormData({ name: "", phone: "", address: "" });
       router.push("/success");
       toast.success(" Your Order Request Done!");
+      setCartOpen(false);
     }
   };
 
