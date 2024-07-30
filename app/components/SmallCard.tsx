@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+import { urlFor } from "@/lib/sanity";
 import { fullProduct } from "@/types/interface";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -7,12 +9,14 @@ interface SamllCardProps {
   product: fullProduct;
 }
 
+export const revlidate = 10; 
+
 const SmallCard = ({ product }: SamllCardProps) => {
   return (
     <div className="group relative">
       <div className="aspect-square w-full overflow-hidden rounded-md bg-2 group-hover:opacity-75 lg:h-80">
         <Link href={`/product/${product.slug}`} legacyBehavior>
-          <img
+          <Image
             src={product.imageUrl}
             alt="Product image"
             className="w-full h-full object-cover object-center lg:h-full lg:w-full"

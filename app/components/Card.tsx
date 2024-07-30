@@ -73,11 +73,7 @@ export default function Card({
       });
 
       await Promise.all(imagePromises);
-
-      // Wait for 1 second before setting loading to false
-      setTimeout(() => {
-        setLoading(false);
-      }, 1000);
+      setLoading(false);
     }
 
     setLoading(true);
