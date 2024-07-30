@@ -255,7 +255,7 @@ export default function CartProduct({
                     <div className="grid grid-cols-4 items-center gap-4">
                       <Label className="text-right">Phone</Label>
                       <Input
-                        type="number"
+                        type="tel"
                         className="col-span-3"
                         name="phone"
                         value={formData.phone}
